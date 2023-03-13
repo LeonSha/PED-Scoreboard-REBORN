@@ -1,0 +1,52 @@
+Version 0.6.0 2021/06/08
+* new keyboard shortcut: k for strike (in addition to s)
+* new keyboard shortcut: c for reset count
+
+Version 0.5.0 2021/05/28
+* keyboard shortcuts are ignored when entering a team name or color
+* keyboard shortcuts are ignored if middle or end of inning
+* new keyboard shortcut: r for run (visitor if top of inning, home if bottom of inning)
+* new keyboard shortcut: h for hit (visitor if top of inning, home if bottom of inning)
+* new keyboard shortcut: e for error (home if top of inning, visitor if bottom of inning)
+* new keyboard shortcut: p for progress (moves from top to middle to bottom to end of inning
+  and repeats)
+* new button: FINAL, shows "F/X" in progress area, where X = inning
+* the font Bebas Neue now loads directly from Google Fonts and you don't have to install it
+  on your own
+* rearranged / cleaned up the control window
+
+Version 0.4.0 2021/05/26
+* if you clear a base, and all bases are now empty, the graphic in the Scoreboard Window now properly updates
+* base graphics are now clear inside and won't clash if you change the Stats background color
+* keyboard shortcuts: b for ball, s for strike, o for outs
+* keyboard shortcuts: 1 toggles first base, 2 toggles second base, 3 toggles thrid base
+* if you are in the MID or END of an inning, balls/strikes/outs are now ignored. they will flash red to remind you to advance the inning progress
+
+Version 0.3.0
+* new Scoreboard window replaces the text files that OBS would read to update information.
+    * in OBS > Scenes > Sources, add Window Capture and choose the Scoreboard window.
+    * if you had previously used the group of text files, you can delete those. 
+    * if you wish to continue using the text files, those will continue to work.
+    * team names are right-aligned, and you can position the Scoreboard so the unused
+      team name space overlaps the left-hand side
+    * team background colors can be assinged. legal HTML color codes and aliases are
+      allowed (like blue, #00f, #0000ff, darkblue, red, etc.)
+    * stats background color can be assigned.
+
+Version 0.2.0 
+* reduced automation timeout from 12 seconds to 10 seconds
+* on Ball 4, Count was not resetting - fixed
+* changed default Visitor/Home names to WARRIORS/MUSTANGS
+* after Out 3, Count now resets
+* when entering MID or END of inning, baserunners automatically clear
+* added RESET COUNT button
+* removed space in 2-digit innings: TOP 10 becomes TOP10 so it fits better - not a perfect solution, as the space character was narrower than a number
+* resetting the count will now clear the text completely instead of setting to "0 - 0"
+* resetting outs at the end of a half-inning clears the Outs text completely instead of setting to "0 OUTS"
+* starting a half-inning restores Outs text to "0 OUTS"
+* on Ball 4, put a runner on 1st, advance any other runners, increase score if bases were loaded
+    * note: for now, if you cancel, you'll have to reset the runners and subtract any score manually
+* added CLEAR BASES button
+
+Version 0.1.0 2021-05-09 Features:
+*need to list*

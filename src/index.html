@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>PED Scoreboard REBORN 0.7.0</title>
+    <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"-->
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@600&display=swap" rel="stylesheet">    <script defer src="index.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">    <script defer src="index.js"></script>
+  </head>
+  <body>
+    <!-- <nav class="navbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paw" class="svg-inline--fa fa-paw fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 224c-79.41 0-192 122.76-192 200.25 0 34.9 26.81 55.75 71.74 55.75 48.84 0 81.09-25.08 120.26-25.08 39.51 0 71.85 25.08 120.26 25.08 44.93 0 71.74-20.85 71.74-55.75C448 346.76 335.41 224 256 224zm-147.28-12.61c-10.4-34.65-42.44-57.09-71.56-50.13-29.12 6.96-44.29 40.69-33.89 75.34 10.4 34.65 42.44 57.09 71.56 50.13 29.12-6.96 44.29-40.69 33.89-75.34zm84.72-20.78c30.94-8.14 46.42-49.94 34.58-93.36s-46.52-72.01-77.46-63.87-46.42 49.94-34.58 93.36c11.84 43.42 46.53 72.02 77.46 63.87zm281.39-29.34c-29.12-6.96-61.15 15.48-71.56 50.13-10.4 34.65 4.77 68.38 33.89 75.34 29.12 6.96 61.15-15.48 71.56-50.13 10.4-34.65-4.77-68.38-33.89-75.34zm-156.27 29.34c30.94 8.14 65.62-20.45 77.46-63.87 11.84-43.42-3.64-85.21-34.58-93.36s-65.62 20.45-77.46 63.87c-11.84 43.42 3.64 85.22 34.58 93.36z"></path></svg>
+            <span class="link-text">Settings</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="baseball-ball" class="svg-inline--fa fa-baseball-ball fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M368.5 363.9l28.8-13.9c11.1 22.9 26 43.2 44.1 60.9 34-42.5 54.5-96.3 54.5-154.9 0-58.5-20.4-112.2-54.2-154.6-17.8 17.3-32.6 37.1-43.6 59.5l-28.7-14.1c12.8-26 30-49 50.8-69C375.6 34.7 315 8 248 8 181.1 8 120.5 34.6 75.9 77.7c20.7 19.9 37.9 42.9 50.7 68.8l-28.7 14.1c-11-22.3-25.7-42.1-43.5-59.4C20.4 143.7 0 197.4 0 256c0 58.6 20.4 112.3 54.4 154.7 18.2-17.7 33.2-38 44.3-61l28.8 13.9c-12.9 26.7-30.3 50.3-51.5 70.7 44.5 43.1 105.1 69.7 172 69.7 66.8 0 127.3-26.5 171.9-69.5-21.1-20.4-38.5-43.9-51.4-70.6zm-228.3-32l-30.5-9.8c14.9-46.4 12.7-93.8-.6-134l30.4-10c15 45.6 18 99.9.7 153.8zm216.3-153.4l30.4 10c-13.2 40.1-15.5 87.5-.6 134l-30.5 9.8c-17.3-54-14.3-108.3.7-153.8z"></path></svg>
+            <span class="link-text">Baseball</span>
+          </a>
+        </li>
+      </ul>
+    </nav> -->
+    <main>
+      <div class="tim-section">
+        <p style="font-weight: bold;">PED Scoreboard REBORN</p> <p>The Open-Source</p> <p>Baseball and Softball Scorebug</p>
+      </div>  
+      <div id="divStatusBar" class="tim-section" style="padding: 0px"></div>
+      <div class="round-time-bar" id="appendTimeBar"></div>
+      <div class="tim-section">
+        <span class="shortcut">P</span>ROGRESS: 
+        <button id="btnNowSub1" class="button decrease">&#9664;</button>
+        <button id="btnNow" class="button">X</button>
+        <button id="btnNowAdd1" class="button increase">&#9654;</button>
+      </div>
+      <table id="maintable" style="margin: auto;">
+        <tr>
+          <td style="vertical-align: middle; padding-top: 7%;">Inning<div id="divInning">X</div><span class="shortcut">R</span>UNS</td>
+          <td>
+            VIS<br>
+            <button id="btnVisitorAdd1" class="button increase">&#9650;</button><br>
+            <button id="Visitor_Inning_Score" class="button">0</button><br>
+            <button id="btnVisitorSub1" class="button decrease">&#9660;</button>
+          </td>
+          <td>
+            HOME<br>
+            <button id="btnHomeAdd1" class="button increase">&#9650;</button><br>
+            <button id="Home_Inning_Score" class="button">0</button><br>
+            <button id="btnHomeSub1" class="button decrease">&#9660;</button>
+          </td>
+          <td style="padding-left: 2%;">
+            <span class="shortcut">B</span>ALLS<br>
+            <button id="btnBallAdd" class="button increase">&#9650;</button><br>
+            <button id="btnBalls" class="button">0</button><br>
+            <button id="btnBallSub" class="button decrease">&#9660;</button>
+          </td>
+          <td style="padding-right: 3%;">
+            <span class="shortcut">S</span>TRI<span class="shortcut">K</span>ES<br>
+            <button id="btnStrikeAdd" class="button increase">&#9650;</button><br>
+            <button id="btnStrikes" class="button">0</button><br>
+            <button id="btnStrikeSub" class="button decrease">&#9660;</button>
+          </td>
+          <td>
+            <span class="shortcut">O</span>UTS<br>
+            <button id="btnOutAdd" class="button increase">&#9650;</button><br>
+            <button id="btnOuts" class="button">0</button><br>
+            <button id="btnOutSub" class="button decrease">&#9660;</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: middle;">TOTAL</td>
+          <td>
+            <button id="Visitor_Total_Score" class="button"></button>
+          </td>
+          <td>
+            <button id="Home_Total_Score" class="button"></button>
+          </td>
+          <td colspan=3>
+            <button id="btnResetCount" class="button action">RESET&nbsp;<span class="shortcut">C</span>OUNT</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: middle;">Overall<br><span class="shortcut">H</span>ITS</td>
+          <td>
+            VIS<br>
+            <button id="btnVisitorHitsAdd1" class="button increase">&#9650;</button><br>
+            <button id="Visitor_Hits" class="button">0</button><br>
+            <button id="btnVisitorHitsSub1" class="button decrease">&#9660;</button>
+          </td>
+          <td>
+            HOME<br>
+            <button id="btnHomeHitsAdd1" class="button increase">&#9650;</button><br>
+            <button id="Home_Hits" class="button">0</button><br>
+            <button id="btnHomeHitsSub1" class="button decrease">&#9660;</button>
+          </td>
+          <td style="vertical-align: middle; padding-left: 3%;">Overall<br><span class="shortcut">E</span>RRORS</td>
+          <td>
+            VIS<br>
+            <button id="btnVisitorErrorsAdd1" class="button increase">&#9650;</button><br>
+            <button id="Visitor_Errors" class="button">0</button><br>
+            <button id="btnVisitorErrorsSub1" class="button decrease">&#9660;</button>
+          </td>
+          <td>
+            HOME<br>
+            <button id="btnHomeErrorsAdd1" class="button increase">&#9650;</button><br>
+            <button id="Home_Errors" class="button">0</button><br>
+            <button id="btnHomeErrorsSub1" class="button decrease">&#9660;</button>
+          </td>
+        </tr>
+      </table>
+      <div class="tim-section">
+        <table style="margin: auto;">
+          <tr>
+            <td>
+              <button id="btnThirdBase" class="button base-off"><span class="shortcut">3</span>B</button>
+              <button id="btnSecondBase" class="button base-off"><span class="shortcut">2</span>B</button>
+              <button id="btnFirstBase" class="button base-off"><span class="shortcut">1</span>B</button><BR><BR>
+            </td>
+            <td>
+              &nbsp;&nbsp;&nbsp;<button id="btnClearAllBases" class="button action">CLEAR BASES</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="tim-section">
+        <span style="color: yellow">NAMES</span>
+        V: <input size="6" id="inputVisitorName" value="VISITORS">
+        H: <input size="6" id="inputHomeName" value="HOME">
+      </div>
+      <div class="tim-section">
+        <span style="color: yellow">COLORS</span>
+        V: <input size="3" id="inputVisitorColor" value="black">
+        H: <input size="3" id="inputHomeColor" value="blue">
+        STATS: <input size="3" id="inputStatsColor" value="pink">
+      </div>
+      <hr>
+      <div class="tim-section">
+        <button id="btnResetGame" class="button action">RESET GAME</button>
+        &nbsp;&nbsp;&nbsp;
+        <button id="btnFinal" class="button action">FINAL</button>
+      </div>
+      <div class="tim-section">
+        Inning Edit: 
+        <button id="btnInningSub1" class="button decrease">&#9664;</button>
+        <button id="btnInning" class="button">X</button>
+        <button id="btnInningAdd1" class="button increase">&#9654;</button>
+      </div>
+    </main>
+    </break>
+    <p style="text-align: center; font-size: 12px;">v0.7.0 - WORK IN PROGRESS</p>
+  </body>
+</html>
