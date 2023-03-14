@@ -213,7 +213,7 @@ initializeTeamErrors();
 //
 fs.readFile(obsdir + "/Visitor_Name.txt", function(err, data) {
     if (err) {
-        fs.writeFileSync(obsdir + "/Visitor_Name.txt", "WARRIORS");
+        fs.writeFileSync(obsdir + "/Visitor_Name.txt", "VISITOR");
         inputVisitorName.value = "VISITORS";
     }
     else {
@@ -225,7 +225,7 @@ fs.readFile(obsdir + "/Visitor_Name.txt", function(err, data) {
 });
 fs.readFile(obsdir + "/Home_Name.txt", function(err, data) {
     if (err) {
-        fs.writeFileSync(obsdir + "/Home_Name.txt", "MUSTANGS");
+        fs.writeFileSync(obsdir + "/Home_Name.txt", "HOME");
         inputHomeName.value = "HOME";
     }
     else {
@@ -247,7 +247,7 @@ fs.readFile(obsdir + "/Visitor_Color.txt", function(err, data) {
 });
 fs.readFile(obsdir + "/Home_Color.txt", function(err, data) {
     if (err) {
-        fs.writeFileSync(obsdir + "/Home_Color.txt", "darkgreen");
+        fs.writeFileSync(obsdir + "/Home_Color.txt", "darkblue");
         inputHomeColor.value = "darkblue";
     }
     else {
@@ -258,7 +258,7 @@ fs.readFile(obsdir + "/Home_Color.txt", function(err, data) {
 });
 fs.readFile(obsdir + "/Stats_Color.txt", function(err, data) {
     if (err) {
-        fs.writeFileSync(obsdir + "/Stats_Color.txt", "darkgreen");
+        fs.writeFileSync(obsdir + "/Stats_Color.txt", "black");
         inputStatsColor.value = "black";
     }
     else {

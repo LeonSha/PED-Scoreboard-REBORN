@@ -1,3 +1,13 @@
+Version 0.7.0 2023/03/14
+* A third, "shorthand" box score, which shows the runs, hits, and errors for each team
+* The "innings" scoreboard is now working: scores are counted for each inning, and added to each team's total (it also now iterates through additional "extra" innings, if any)
+* Hits and error counts now work and are rendered on all applicable scoreboards
+* Switched the "Reset Runs" button to "Reset Game", which resets team hits/errors on top of preexisting runners/counts/outs
+* Some UI changes, personal preference :)
+
+
+** PREVIOUS VERSIONS - FROM ORIGINAL PED SCOREBOARD (LINK: https://obsproject.com/forum/resources/ped-scoreboard.1281/)
+
 Version 0.6.0 2021/06/08
 * new keyboard shortcut: k for strike (in addition to s)
 * new keyboard shortcut: c for reset count

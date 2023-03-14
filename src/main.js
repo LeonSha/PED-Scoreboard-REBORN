@@ -14,6 +14,7 @@ let windowScoreboard;
 const createWindow = () => {
   // Create the browser window.
   windowMain = new BrowserWindow({
+    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
     width: 400,
     height: 700,
     webPreferences: {
@@ -27,6 +28,7 @@ const createWindow = () => {
   windowMain.loadFile(path.join(__dirname, 'index.html'));
 
   windowScoreboard = new BrowserWindow({
+    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
     width: 700,
     height: 186,
     webPreferences: {
@@ -39,6 +41,7 @@ const createWindow = () => {
   windowScoreboard.loadFile(path.join(__dirname, 'scoreboard.html'));
   
   windowInnings = new BrowserWindow({
+    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
    width: 1090,
    height: 260,
    webPreferences: {
@@ -51,6 +54,7 @@ const createWindow = () => {
   windowInnings.loadFile(path.join(__dirname, 'innings.html'));
 
   windowscoreShort = new BrowserWindow({
+    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
     width: 570,
     height: 260,
     webPreferences: {
