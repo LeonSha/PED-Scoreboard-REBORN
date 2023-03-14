@@ -1,9 +1,9 @@
 # PED-Scoreboard-REBORN
 Continued development of the PED Scoreboard web application for OBS, based on original application from OBS Forums User Tim Elliot (LINK: https://obsproject.com/forum/resources/ped-scoreboard.1281/)
 
-PED Scoreboard was originally developed in early-mid 2021 by Tim Elliot. Originally designed for use with baseball and softball, Tim had the goal of giving sports streamers the access to a free, open-source scorebug that could be integrated with Open Broadcaster Software (OBS). Whether using the GUI on offer or the built-in text files with OBS, the software offered great flexibility to all sports streamers.
+PED Scoreboard was originally developed in early-mid 2021 by Tim Elliot. Designed for use with baseball and softball, Tim had the goal of giving sports streamers the access to a free, open-source scorebug that could be integrated with Open Broadcaster Software (OBS). Whether using the GUI on offer or the built-in text files with OBS, the software offered great flexibility to all sports streamers.
 
-PED Scoreboard REBORN has been created to help carry on the development of Tim's excellent work, looking to offer an excellent experience for baseball and softball fans looking to up the quality of their videos and/or livestreams.
+PED Scoreboard REBORN has been created to help carry on the development of Tim's excellent work, as it offers an excellent experience for baseball and softball fans looking to up the quality of their videos and/or livestreams.
 
 
 ## Features
