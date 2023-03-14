@@ -170,7 +170,7 @@ let initializeTeamHits = function() {
     let data;
         try {
             data = fs.readFileSync(obsdir + "/Visitor_Hits.txt");
-            console.log("Visitor Hits: " + data);
+            // console.log("Visitor Hits: " + data);
             VisitorHit = Number(data.toString());
         }
         catch {
@@ -178,7 +178,7 @@ let initializeTeamHits = function() {
         }
         try {
             data = fs.readFileSync(obsdir + "/Home_Hits.txt");
-            console.log("Home Hits: " + data);
+            // console.log("Home Hits: " + data);
             HomeHit = Number(data.toString());
         }
         catch {
@@ -191,7 +191,7 @@ let initializeTeamErrors = function() {
     let data;
         try {
             data = fs.readFileSync(obsdir + "/Visitor_Errors.txt");
-            console.log("Visitor Errors: " + data);
+            // console.log("Visitor Errors: " + data);
             VisitorError = Number(data.toString());
         }
         catch {
@@ -199,7 +199,7 @@ let initializeTeamErrors = function() {
         }
         try {
             data = fs.readFileSync(obsdir + "/Home_Errors.txt");
-            console.log("Home Errors: " + data);
+            // console.log("Home Errors: " + data);
             HomeError = Number(data.toString());
         }
         catch {
@@ -287,19 +287,19 @@ fs.readFile(obsdir + "/Inning.txt", function (err, data) {
         divInning.innerHTML = inning;
         currentInning = inning;
 
-        console.log(currentInning);
+        // console.log(currentInning);
     }
 
     // update the visitor score for the current inning
     Visitor_Inning_Score.innerHTML = VisitorScores[currentInning - 1];
     Visitor_Hits.innerHTML = VisitorHit;
-    console.log("Visitor ERRORS: " + VisitorError);
+    // console.log("Visitor ERRORS: " + VisitorError);
     Visitor_Errors.innerHTML = VisitorError;
     
     // update the home score for the current inning
     Home_Inning_Score.innerHTML = HomeScores[currentInning - 1];
     Home_Hits.innerHTML = HomeHit;
-    console.log("Home ERRORS: " + HomeError);
+    // console.log("Home ERRORS: " + HomeError);
     Home_Errors.innerHTML = HomeError;
 
     // update totals ON GRAPHIC!
@@ -315,7 +315,7 @@ fs.readFile(obsdir + "/Inning.txt", function (err, data) {
     if (currentInning > maxInningsScoreboard) {
         let j = 1;
         for (j; j <= 7; j++) {
-            console.log("HERE");
+            // console.log("HERE");
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: currentInning - maxInningsScoreboard + j})
             ipcRenderer.send('update-scoreboard', {elementID: "sb-Visitor-score" + j, value: VisitorScores[currentInning - maxInningsScoreboard + j - 1]})
             ipcRenderer.send('update-scoreboard', {elementID: "sb-Home-score" + j, value: HomeScores[currentInning - maxInningsScoreboard + j - 1]})
@@ -391,10 +391,10 @@ fs.readFile(obsdir + "/now.txt", function (err, data) {
         now = 0;
     }
     else {
-        console.log(data);
+        // console.log(data);
         var thetext = data.toString();
         now = nowText.indexOf(thetext);
-        console.log(thetext);
+        // console.log(thetext);
         btnNow.innerHTML = thetext;
 
         innText = thetext;
@@ -554,21 +554,21 @@ let updateTotalRuns = function(team) {
 //
 let updateHits = function(team, amount) {
     if (team === "Visitor") {
-        console.log("HERE");
+        // console.log("HERE");
         VisitorHit = VisitorHit + amount;
         if (VisitorHit < 0) {VisitorHit = 0;}
         Visitor_Hits.innerHTML = VisitorHit.toString();
-        console.log("NEW VALUE:" + Visitor_Hits.innerHTML);
+        // console.log("NEW VALUE:" + Visitor_Hits.innerHTML);
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Visitor-scoreH", value: VisitorHit.toString() });
     }
     else if (team === "Home") {
-        console.log("HERE");
+        // console.log("HERE");
         HomeHit = HomeHit + amount;
         if (HomeHit < 0) {HomeHit = 0;}
         Home_Hits.innerHTML = HomeHit.toString();
-        console.log("NEW VALUE:" + Home_Hits.innerHTML);
+        // console.log("NEW VALUE:" + Home_Hits.innerHTML);
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Home-scoreH", value: HomeHit.toString() });
@@ -582,22 +582,22 @@ let updateHits = function(team, amount) {
 //
 let updateErrors = function(team, amount) {
     if (team === "Visitor") {
-        console.log("HERE");
+        // console.log("HERE");
         VisitorError = VisitorError + amount;
         if (VisitorError < 0) {VisitorError = 0;}
         Visitor_Errors.innerHTML = VisitorError.toString();
-        console.log("NEW VALUE:" + Visitor_Errors.innerHTML);
+        // console.log("NEW VALUE:" + Visitor_Errors.innerHTML);
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Visitor-scoreE", value: VisitorError.toString() });
     }
 
     else if (team === "Home") {
-        console.log("HERE2");
+        // console.log("HERE2");
         HomeError = HomeError + amount;
         if (HomeError < 0) {HomeError = 0;}
         Home_Errors.innerHTML = HomeError.toString();
-        console.log("NEW VALUE:" + Home_Errors.innerHTML);
+        // console.log("NEW VALUE:" + Home_Errors.innerHTML);
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Home-scoreE", value: HomeError.toString() });
@@ -620,10 +620,10 @@ let adjustScore = function(item, amount) {
         ids = "HomeScores";
     }
 
-    console.log("Current Value: " + current);
+    // console.log("Current Value: " + current);
     current[currentInning - 1] = current[currentInning - 1] + amount;
     if (current[currentInning - 1] < 0) {current[currentInning - 1] = 0; }
-    console.log("NEW VALUE: " + current);
+    // console.log("NEW VALUE: " + current);
 
     // write the file for OBS
     let filename = obsdir + "/" + item.id + ".txt";
@@ -652,11 +652,11 @@ let adjustStats = function(item, amount) {
         ids = "HomeError";
     }
 
-    console.log(ids);
-    console.log("Current Value: " + current);
+    // console.log(ids);
+    // console.log("Current Value: " + current);
     current = current + amount;
     if (current < 0) {current = 0; }
-    console.log("NEW VALUE: " + current);
+    // console.log("NEW VALUE: " + current);
 
 
     // write the file for OBS
@@ -674,7 +674,7 @@ let adjustFile = function(item, filename, amount) {
             var oldCount;
             var newCount;
             if (err) {
-                console.log("ERROR");
+                // console.log("ERROR");
                 oldCount = 0;
             }
             else {
@@ -1245,12 +1245,12 @@ let adjustColor = function(team, color, read) {
     var oldColor = color;
 
     
-    console.log(color + " || Type: " + typeof(color));
+    // console.log(color + " || Type: " + typeof(color));
     
     if (color.includes(",")) {
-        console.log("TRUE");
+        // console.log("TRUE");
         color = "linear-gradient(" + color + ")";
-        console.log(color + " || Type: " + typeof(color));
+        // console.log(color + " || Type: " + typeof(color));
     }
 
 
@@ -1263,7 +1263,7 @@ let adjustColor = function(team, color, read) {
             return;
         }
         else {
-            console.log(filename + ": " + data.toString());
+            // console.log(filename + ": " + data.toString());
         }
     })
     if (team === "Home" || team === "Visitor") {
