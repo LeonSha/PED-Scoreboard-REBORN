@@ -5,6 +5,8 @@
   "authors": "Ben Fiore",
   "description": "Scoreboard helper for OBSProject",
   "main": "src/main.js",
+  "icon": "PED Scoreboard REBORN Logo Transparent.ico",
+  
   
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",

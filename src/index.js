@@ -61,6 +61,9 @@ const btnThirdBase = document.getElementById("btnThirdBase");
 const inputVisitorName = document.getElementById("inputVisitorName");
 const inputHomeName = document.getElementById("inputHomeName");
 
+// const menuVisitorLogo = document.getElementById("menuVisitorLogo");
+// const menuHomeLogo = document.getElementById("menuHomeLogo");
+
 const inputVisitorColor = document.getElementById("inputVisitorColor");
 const inputHomeColor = document.getElementById("inputHomeColor");
 const inputStatsColor = document.getElementById("inputStatsColor");
@@ -72,20 +75,6 @@ const btnResetGame = document.getElementById("btnResetGame");
 const divStatusBar = document.getElementById("divStatusBar");
 const btnClearAllBases = document.getElementById("btnClearAllBases");
 
-//const gameWindow = new BrowserWindow({
-//    width: 300,
-//    height: 100,
-//    title: "Kid Rock Rocks",
-//    webPreferences: {
-//      nodeIntegration: true,
-//      contextIsolation: false
-//      // devTools: false
-//    }
-//});
-
-//
-//
-//
 let dummyError = function (err) {
     if (err) {
         console.log(err);

@@ -10,11 +10,12 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 let windowMain;
 let windowScoreboard;
+let appIcon = 'PED Scoreboard REBORN Logo Transparent.ico';
 
 const createWindow = () => {
   // Create the browser window.
   windowMain = new BrowserWindow({
-    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
+    icon: appIcon,
     width: 400,
     height: 700,
     webPreferences: {
@@ -28,7 +29,7 @@ const createWindow = () => {
   windowMain.loadFile(path.join(__dirname, 'index.html'));
 
   windowScoreboard = new BrowserWindow({
-    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
+    icon: appIcon,
     width: 700,
     height: 186,
     webPreferences: {
@@ -37,11 +38,11 @@ const createWindow = () => {
       devTools: true
     }
   });
-  windowScoreboard.setMenu(null);
+  // windowScoreboard.setMenu(null);
   windowScoreboard.loadFile(path.join(__dirname, 'scoreboard.html'));
   
   windowInnings = new BrowserWindow({
-    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
+    icon: appIcon,
    width: 1090,
    height: 260,
    webPreferences: {
@@ -54,7 +55,7 @@ const createWindow = () => {
   windowInnings.loadFile(path.join(__dirname, 'innings.html'));
 
   windowscoreShort = new BrowserWindow({
-    icon: 'PED Scoreboard REBORN Logo Transparent.ico',
+    icon: appIcon,
     width: 570,
     height: 260,
     webPreferences: {
