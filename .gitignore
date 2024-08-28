@@ -4,3 +4,6 @@
 *OBSFiles
 *.txt
 OBSFiles/
+node_modules/
+/node_modules/
+*node_modules
