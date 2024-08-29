@@ -30,8 +30,8 @@ const createWindow = () => {
 
   windowScoreboard = new BrowserWindow({
     icon: appIcon,
-    width: 700,
-    height: 210,
+    width: 550,
+    height: 160,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

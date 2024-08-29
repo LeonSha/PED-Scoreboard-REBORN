@@ -7,3 +7,6 @@ OBSFiles/
 node_modules/
 /node_modules/
 *node_modules
+/.idea/
+/forge.config.js
+/package-lock.json
