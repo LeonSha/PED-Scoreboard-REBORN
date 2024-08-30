@@ -27,7 +27,6 @@ main {
   text-align: center;
   border-right: 4px solid rgb(223, 223, 223);
   font-size: 90%;
-  text-align: center;
   border-top: 4px solid rgb(223, 223, 223);
   border-bottom: 4px solid rgb(223, 223, 223);
 }
@@ -41,7 +40,7 @@ main {
 }
 
 #sb-heading {
-  text-align: center;
+  text-align: right;
   border-right: 4px solid rgb(223, 223, 223);
   font-size: 70%;
   padding-top: 2%;

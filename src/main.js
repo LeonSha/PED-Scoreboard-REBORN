@@ -40,7 +40,8 @@ const createWindow = () => {
   });
   // windowScoreboard.setMenu(null);
   windowScoreboard.loadFile(path.join(__dirname, 'scoreboard.html'));
-  
+  windowScoreboard.setPosition(200, 100, false)
+
   windowInnings = new BrowserWindow({
     icon: appIcon,
    width: 1090,
@@ -53,19 +54,20 @@ const createWindow = () => {
  });
   windowInnings.setMenu(null);
   windowInnings.loadFile(path.join(__dirname, 'innings.html'));
+  windowInnings.setPosition(200, 300, false)
 
-  windowscoreShort = new BrowserWindow({
-    icon: appIcon,
-    width: 570,
-    height: 260,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      devTools: true
-    }
-  });
-   windowscoreShort.setMenu(null);
-   windowscoreShort.loadFile(path.join(__dirname, 'scoreshort.html'));
+  // windowscoreShort = new BrowserWindow({
+  //   icon: appIcon,
+  //   width: 570,
+  //   height: 260,
+  //   webPreferences: {
+  //     nodeIntegration: true,
+  //     contextIsolation: false,
+  //     devTools: true
+  //   }
+  // });
+  //  windowscoreShort.setMenu(null);
+  //  windowscoreShort.loadFile(path.join(__dirname, 'scoreshort.html'));
 
   
 
@@ -81,12 +83,12 @@ app.on('ready', createWindow);
 ipcMain.on('update-scoreboard', (event, arg) => {
   windowScoreboard.webContents.send('action-update', arg);
   windowInnings.webContents.send('action-update', arg);
-  windowscoreShort.webContents.send('action-update', arg);
+  // windowscoreShort.webContents.send('action-update', arg);
 });
 ipcMain.on('change-color', (event, arg) => {
   windowScoreboard.webContents.send('change-color', arg);
   windowInnings.webContents.send('change-color', arg);
-  windowscoreShort.webContents.send('change-color', arg);
+  // windowscoreShort.webContents.send('change-color', arg);
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

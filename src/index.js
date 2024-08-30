@@ -121,6 +121,13 @@ fs.writeFile(obsdir + "/Outs.txt", outsText, dummyError);
 ipcRenderer.send('update-scoreboard', 
     { elementID: "sb-outs", value: outsText });
 
+ipcRenderer.send('update-scoreboard',
+    { elementID: "sb-count-ball-icon", value: "<img src='ball-0.png' height=50 width=120>" });
+ipcRenderer.send('update-scoreboard',
+    { elementID: "sb-count-strike-icon", value: "<img src='strike-0.png' height=50 width=94>" });
+ipcRenderer.send('update-scoreboard',
+    { elementID: "sb-count-out-icon", value: "<img src='out-0.png' height=50 width=94>" });
+
 //
 // Initialize Visitor & Home Scores
 // update from any files that exist
@@ -376,6 +383,10 @@ fs.readFile(obsdir + "/now.txt", function (err, data) {
         fs.writeFileSync(obsdir + "/now.txt", "TOP 1");
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-progress", value: "TOP 1" });
+        ipcRenderer.send('update-scoreboard',
+            { elementID: "sb-progress-text", value: "1" });
+        ipcRenderer.send('update-scoreboard',
+            { elementID: "sb-progress-icon", value: "<img src='inning_top.png' height=90 width=30>" });
         btnNow.innerHTML = "TOP 1";
         now = 0;
     }
@@ -456,7 +467,8 @@ let adjustProgress = function(amount) {
     // if Mid or End of inning, clear baserunners, Hide Count and Outs
     if (isMidInning(now) || isEndInning(now)) {
         clearAllBases();
-        // hide count - already done elsewhere
+        // hide count
+        resetCount();
         // hide outs
         resetOuts();
     }
@@ -819,19 +831,41 @@ let adjustOuts = function(amount) {
 
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-outs", value: strOuts });
+    let outValue = "<img src='out-" + outs + ".png' height=50 width=94>"
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-count-out-icon", value: outValue });
     progressHeader(now, strOuts);
 };
+
+// Function for updating scoreboard top icon and text - FOR SCOREBOARDS ONLY
+let progressProgress = function(right_now) {
+    let inningSuffix = "top";
+    if (isMidInning(right_now)) {
+        inningSuffix = "mid"
+    } else if (isEndInning(right_now)) {
+        inningSuffix = "end"
+    } else if (isBotInning(right_now)) {
+        inningSuffix = "bot"
+    }
+    currentInning = Math.floor(now/4) + 1;
+    let inningIconValue = "<img src='inning_" + inningSuffix + ".png' height=90 width=30>"
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-progress-text", value: currentInning.toString() });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-progress-icon", value: inningIconValue });
+}
 
 // Function for updating scoreboard header - FOR INNINGS, SCORESHORT BOARDS ONLY
 let progressHeader = function(right_now, outs) {
     if (!isMidInning(right_now) && !isEndInning(right_now)) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-heading", value: nowText[right_now] + ", " + outs });
+            { elementID: "sb-heading", value: nowText[right_now] });
     }
     else {
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-heading", value: nowText[right_now] });
     }
+    progressProgress(right_now)
 }
 
 //
@@ -844,6 +878,8 @@ let resetOuts = function() {
     fs.writeFile(obsdir + "/Outs.txt", outsText, dummyError);
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-outs", value: outsText });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-count-out-icon", value: "<img src='out-0.png' height=50 width=94>" });
 };
 let setZeroOuts = function() {
     outs = 0;
@@ -852,6 +888,8 @@ let setZeroOuts = function() {
     fs.writeFile(obsdir + "/Outs.txt", outsText, dummyError);
     ipcRenderer.send('update-scoreboard', 
        { elementID: "sb-outs", value: outsText });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-count-out-icon", value: "<img src='out-0.png' height=50 width=94>" });
 }
 
 //
@@ -866,6 +904,10 @@ let resetCount = function() {
     fs.writeFile(obsdir + "/Count.txt", countText, dummyError);
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-count", value: countText });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-count-ball-icon", value: "<img src='ball-0.png' height=50 width=120>" });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-count-strike-icon", value: "<img src='strike-0.png' height=50 width=94>" });
 };
 
 //
@@ -908,6 +950,13 @@ let adjustCount = function(ballDelta, strikeDelta) {
     fs.writeFile(obsdir + "/Count.txt", countText, dummyError);
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-count", value: countText });
+    let ballIconValue = "<img src='ball-" + balls + ".png' height=50 width=120>"
+    let strikeIconValue = "<img src='strike-" + strikes + ".png' height=50 width=94>"
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-count-ball-icon", value: ballIconValue });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-count-strike-icon", value: strikeIconValue });
+
     if (balls === 4) {
         // reset the Count
         resetCount();
