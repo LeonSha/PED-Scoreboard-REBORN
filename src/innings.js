@@ -9,3 +9,7 @@ ipcRenderer.on('action-update', (event, arg) => {
 ipcRenderer.on('change-color', (event, arg) => {
     document.getElementById(arg.elementID).style.background = arg.value;
 });
+
+ipcRenderer.on('change-foreground-color', (event, arg) => {
+    document.getElementById(arg.elementID).style.color = arg.value;
+});

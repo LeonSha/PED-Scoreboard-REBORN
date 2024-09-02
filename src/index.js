@@ -311,10 +311,10 @@ fs.readFile(obsdir + "/Inning.txt", function (err, data) {
     if (currentInning > maxInningsScoreboard) {
         let j = 1;
         for (j; j <= 7; j++) {
-            // console.log("HERE");
+            console.log("HERE");
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: currentInning - maxInningsScoreboard + j})
-            ipcRenderer.send('update-scoreboard', {elementID: "sb-Visitor-score" + j, value: VisitorScores[currentInning - maxInningsScoreboard + j - 1]})
-            ipcRenderer.send('update-scoreboard', {elementID: "sb-Home-score" + j, value: HomeScores[currentInning - maxInningsScoreboard + j - 1]})
+            ipcRenderer.send('update-scoreboard', {elementID: "sb-Visitor-score" + j, value: VisitorScores[currentInning - maxInningsScoreboard + j - 1] + "$"})
+            ipcRenderer.send('update-scoreboard', {elementID: "sb-Home-score" + j, value: HomeScores[currentInning - maxInningsScoreboard + j - 1] + "$"})
 
             // ipcRenderer.send('update-scoreboard', 
             // { elementID: "sb-heading", value: nowText[now] + ", " + outsText });
@@ -484,8 +484,8 @@ let adjustProgress = function(amount) {
         let j = 1;
         for (j; j <= 7; j++) {
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: currentInning - maxInningsScoreboard + j})
-            ipcRenderer.send('update-scoreboard', {elementID: "sb-Visitor-score" + j, value: VisitorScores[currentInning - maxInningsScoreboard + j - 1]})
-            ipcRenderer.send('update-scoreboard', {elementID: "sb-Home-score" + j, value: HomeScores[currentInning - maxInningsScoreboard + j - 1]})
+            ipcRenderer.send('update-scoreboard', {elementID: "sb-Visitor-score" + j, value: VisitorScores[currentInning - maxInningsScoreboard + j - 1] + "*"})
+            ipcRenderer.send('update-scoreboard', {elementID: "sb-Home-score" + j, value: HomeScores[currentInning - maxInningsScoreboard + j - 1] + "*"})
 
             // ipcRenderer.send('update-scoreboard', 
             // { elementID: "sb-heading", value: nowText[now] + ", " + outsText });
@@ -496,17 +496,36 @@ let adjustProgress = function(amount) {
         let j = 1;
         for (j; j <= 7; j++) {
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: j})
-            ipcRenderer.send('update-scoreboard', {elementID: "sb-Visitor-score" + j, value: VisitorScores[j - 1]})
-            ipcRenderer.send('update-scoreboard', {elementID: "sb-Home-score" + j, value: HomeScores[j - 1]})
-
-            // ipcRenderer.send('update-scoreboard', 
-            // { elementID: "sb-heading", value: nowText[now] + ", " + outsText });
+            changeInningsColor("sb-Visitor-score" + j, VisitorScores[j - 1])
+            changeInningsColor("sb-Home-score" + j, HomeScores[j - 1])
         }
     }
+
+    // change passed innings to grey
+
 
     progressHeader(now, outsText);
 };
 
+let changeInningsColor = function(teamId, score, now, innings) {
+    if (score === 0) {
+        let backGroundColor = inputStatsColor.value;
+        if (backGroundColor.includes(",")) {
+            backGroundColor = "linear-gradient(" + backGroundColor + ")";
+        }
+        ipcRenderer.send('change-color',{ elementID: teamId, value: backGroundColor });
+        ipcRenderer.send('update-scoreboard', {elementID: teamId, value: ""})
+        ipcRenderer.send('change-foreground-color',{ elementID: teamId, value: "white" });
+    } else {
+        ipcRenderer.send('update-scoreboard', {elementID: teamId, value: score})
+        let backGroundColor = "yellow 80%, grey";
+        backGroundColor = "linear-gradient(" + backGroundColor + ")";
+
+        console.log(backGroundColor)
+        ipcRenderer.send('change-color',{ elementID: teamId, value:  backGroundColor });
+        ipcRenderer.send('change-foreground-color',{ elementID: teamId, value: "black" });
+    }
+}
 //
 //
 //
@@ -532,14 +551,18 @@ let updateTotalRuns = function(team) {
     }
     // write the file for OBS
     fs.writeFile(obsdir + "/" + team + "_Total_Score.txt", totalruns.toString(), dummyError);
+    let teamRunsStr = TeamRuns.toString()
+    if (TeamRuns == 0) {
+        teamRunsStr = ""
+    }
     // For current inning
     if (currentInning > maxInningsScoreboard) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-" + team + "-score" + (currentInning - maxInningsScoreboard), value: TeamRuns.toString() });
+            { elementID: "sb-" + team + "-score" + (currentInning - maxInningsScoreboard), value: teamRunsStr });
     }
     else {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-" + team + "-score" + currentInning, value: TeamRuns.toString() });
+            { elementID: "sb-" + team + "-score" + currentInning, value: teamRunsStr });
     }
     // For total runs
     ipcRenderer.send('update-scoreboard', 
@@ -837,6 +860,11 @@ let adjustOuts = function(amount) {
     progressHeader(now, strOuts);
 };
 
+// Function for updating innings color - FOR innings ONLY
+let progressInningColor = function(right_now) {
+    currentInning = Math.floor(now/4) + 1;
+}
+
 // Function for updating scoreboard top icon and text - FOR SCOREBOARDS ONLY
 let progressProgress = function(right_now) {
     let inningSuffix = "top";
@@ -866,6 +894,7 @@ let progressHeader = function(right_now, outs) {
             { elementID: "sb-heading", value: nowText[right_now] });
     }
     progressProgress(right_now)
+    progressInningColor(right_now)
 }
 
 //
