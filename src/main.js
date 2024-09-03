@@ -17,7 +17,7 @@ const createWindow = () => {
   windowMain = new BrowserWindow({
     icon: appIcon,
     width: 400,
-    height: 700,
+    height: 750,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

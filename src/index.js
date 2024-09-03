@@ -75,6 +75,8 @@ const btnResetGame = document.getElementById("btnResetGame");
 const divStatusBar = document.getElementById("divStatusBar");
 const btnClearAllBases = document.getElementById("btnClearAllBases");
 
+const selectTemplates = document.getElementById("selectTemplates");
+
 let dummyError = function (err) {
     if (err) {
         console.log(err);
@@ -1376,6 +1378,11 @@ let setFinal = function(progress, inningsToFinal) {
     resetOuts();
 };
 
+function templateChange() {
+    let objS = document.getElementById("selectTemplates");
+    let value = objS.options[objS.selectedIndex].value;
+    console.log(value)
+}
 // const actionsList = [];
 // const lastAction = document.querySelector('input')
 // if (document.onclick) {
@@ -1426,6 +1433,8 @@ inputStatsColor.onchange = function() { adjustColor("Stats", document.getElement
 btnResetCount.onclick = function() { resetCount(); };
 btnClearAllBases.onclick = function() { clearAllBases(); };
 btnFinal.onclick = function() { setFinal(now, inningsToFinal); };
+
+selectTemplates.onchange = function () {templateChange();}
 
 // keyboard shortcuts
 document.addEventListener('keyup', function (event) {
