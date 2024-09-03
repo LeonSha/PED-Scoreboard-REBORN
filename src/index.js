@@ -468,7 +468,29 @@ let adjustProgress = function(amount) {
     progressHeader(now, outsText);
 };
 
-let changeInningsColor = function(teamId, score, setGrey) {
+let changeInningsColor = function(team, inning, idx) {
+    let nowInning = Math.floor(now/4) + 1;
+
+    let visitGrey = false
+    let homeGrey = false
+    // if i
+    if (inning < nowInning){
+        visitGrey = true
+        homeGrey = true
+    }
+    if (inning === nowInning){
+        visitGrey = true
+        if (isBotInning(now) || isEndInning(now)){
+            homeGrey = true
+        }
+    }
+    let setGrey = homeGrey
+    let score = HomeScores[inning - 1]
+    if (team === "Visitor") {
+        setGrey = visitGrey
+        score = VisitorScores[inning - 1]
+    }
+    let teamId = "sb-" + team + "-score" + idx
     if (score === 0) {
         let backGroundColor = inputStatsColor.value;
         if (setGrey) {
@@ -516,16 +538,12 @@ let updateTotalRuns = function(team) {
 
     // Update the "Innnings" scoreboard if current inning exceeds the max visible innings (in case of "extra innings")
     // If exceeding, increment all innings to show newest inning
+    let nowInning = Math.floor(now/4) + 1;
     if (currentInning > maxInningsScoreboard) {
         let j = 1;
         for (j; j <= 7; j++) {
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: currentInning - maxInningsScoreboard + j})
-            let homeGrey = true
-            if ((isTopInning(now) || isMidInning(now)) && (j === 7)){
-                homeGrey = false
-            }
-            changeInningsColor("sb-Visitor-score" + j, VisitorScores[currentInning - maxInningsScoreboard + j - 1], true)
-            changeInningsColor("sb-Home-score" + j, HomeScores[currentInning - maxInningsScoreboard + j - 1], homeGrey)
+            changeInningsColor(team, currentInning - maxInningsScoreboard + j, j)
         }
     }
     // If undoing, regress to the last visible set of innings (AKA: make the "newest" inning the previous inning)
@@ -533,41 +551,10 @@ let updateTotalRuns = function(team) {
         let j = 1;
         for (j; j <= 7; j++) {
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: j})
-            let visitGrey = false
-            let homeGrey = false
-            // if i
-            if (j < currentInning){
-                visitGrey = true
-                homeGrey = true
-            }
-            if (j === currentInning){
-                visitGrey = true
-                if (isBotInning(now) || isEndInning(now)){
-                    homeGrey = true
-                }
-            }
-            changeInningsColor("sb-Visitor-score" + j, VisitorScores[j - 1], visitGrey)
-            changeInningsColor("sb-Home-score" + j, HomeScores[j - 1], homeGrey)
+            changeInningsColor(team, j, j)
         }
     }
 
-    /*
-    // TODO do this right color and others
-    let teamRunsStr = TeamRuns.toString()
-    if (TeamRuns == 0) {
-        teamRunsStr = ""
-    }
-    // For current inning
-    if (currentInning > maxInningsScoreboard) {
-        ipcRenderer.send('update-scoreboard',
-            { elementID: "sb-" + team + "-score" + (currentInning - maxInningsScoreboard), value: teamRunsStr });
-    }
-    else {
-        ipcRenderer.send('update-scoreboard',
-            { elementID: "sb-" + team + "-score" + currentInning, value: teamRunsStr });
-    }
-
-     */
     // For total runs
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-" + team + "-scoreR", value: totalruns.toString() });
