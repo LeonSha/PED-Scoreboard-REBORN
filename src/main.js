@@ -31,14 +31,14 @@ const createWindow = () => {
   windowScoreboard = new BrowserWindow({
     icon: appIcon,
     width: 550,
-    height: 160,
+    height: 138,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       devTools: true
     }
   });
-  // windowScoreboard.setMenu(null);
+  windowScoreboard.setMenu(null);
   windowScoreboard.loadFile(path.join(__dirname, 'scoreboard.html'));
   windowScoreboard.setPosition(200, 100, false)
 
