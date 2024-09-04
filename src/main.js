@@ -27,6 +27,7 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   windowMain.loadFile(path.join(__dirname, 'index.html'));
+  windowMain.setPosition(0, 0, false)
 
   windowScoreboard = new BrowserWindow({
     icon: appIcon,
@@ -40,7 +41,7 @@ const createWindow = () => {
   });
   windowScoreboard.setMenu(null);
   windowScoreboard.loadFile(path.join(__dirname, 'scoreboard.html'));
-  windowScoreboard.setPosition(200, 100, false)
+  windowScoreboard.setPosition(400, 100, false)
 
   windowInnings = new BrowserWindow({
     icon: appIcon,
@@ -54,7 +55,7 @@ const createWindow = () => {
  });
   windowInnings.setMenu(null);
   windowInnings.loadFile(path.join(__dirname, 'innings.html'));
-  windowInnings.setPosition(200, 300, false)
+  windowInnings.setPosition(400, 300, false)
 
   // windowscoreShort = new BrowserWindow({
   //   icon: appIcon,
@@ -68,6 +69,7 @@ const createWindow = () => {
   // });
   //  windowscoreShort.setMenu(null);
   //  windowscoreShort.loadFile(path.join(__dirname, 'scoreshort.html'));
+  // windowscoreShort.setPosition(400, 600, false)
 
   
 
@@ -95,6 +97,18 @@ ipcMain.on('change-foreground-color', (event, arg) => {
   windowScoreboard.webContents.send('change-foreground-color', arg);
   windowInnings.webContents.send('change-foreground-color', arg);
   // windowscoreShort.webContents.send('change-foreground-color', arg);
+});
+
+ipcMain.on('change-grid-template-columns', (event, arg) => {
+  windowScoreboard.webContents.send('change-grid-template-columns', arg);
+});
+
+ipcMain.on('change-grid-template-rows', (event, arg) => {
+  windowScoreboard.webContents.send('change-grid-template-rows', arg);
+});
+
+ipcMain.on('change-score-board-window-size', (event, arg) => {
+  windowScoreboard.setSize(arg.width, arg.height, false);
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

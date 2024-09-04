@@ -43,8 +43,10 @@ main {
   display: grid;
   grid-template-columns: auto 75px;
   align-items: stretch;
-  grid-template-rows: 52px 46px;
-  font-size: 28pt;
+  grid-template-rows: 75px 75px;
+  font-size: 45pt;
+  /*grid-template-rows: 52px 46px;*/
+  /*font-size: 28pt;*/
 }
 
 #sb-Visitor-name, #sb-Home-name {
@@ -65,9 +67,10 @@ main {
   border-left: 4px solid rgb(223, 223, 223);
   border-right: 4px solid rgb(223, 223, 223);
 }
-#sb-Visitor-name, #sb-Visitor-scoreR, #sb-bases, #sb-progress {
+#sb-Visitor-name, #sb-Visitor-scoreR, #sb-bases, #sb-bases-classic, #sb-progress {
   border-top: 4px solid rgb(223, 223, 223);
 }
+
 #sb-Visitor-scoreR, #sb-Home-scoreR {
   color: white;
   /* background-color: rgb(0, 0, 0); */
@@ -84,6 +87,14 @@ main {
   display: grid;
   grid-template-columns: 40px 120px 130px;
   grid-template-rows: 32px 34px 36px;
+  background-color: white;
+  padding: auto;
+}
+
+.grid-stats-container-classic {
+  display: grid;
+  grid-template-columns: 130px 130px;
+  grid-template-rows: 100px 50px;
   background-color: white;
   padding: auto;
 }
@@ -153,7 +164,7 @@ main {
 }
 
 
-#sb-bases, #sb-progress, #sb-count, #sb-outs {
+#sb-bases, #sb-bases-classic, #sb-progress, #sb-count, #sb-outs {
   color: white;
   text-align: center;
 }
@@ -162,7 +173,7 @@ main {
   border-right: 4px solid rgb(223, 223, 223);
 }
 
-#sb-bases {
+#sb-bases, #sb-bases-classic {
   padding-top: 5%;
 }
 #sb-progress {

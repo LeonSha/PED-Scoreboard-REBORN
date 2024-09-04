@@ -1335,7 +1335,9 @@ let adjustColor = function(team, color, read) {
     else {
         ipcRenderer.send('change-color', 
             { elementID: "sb-Stats-name", value: color });
-        ipcRenderer.send('change-color', 
+        ipcRenderer.send('change-color',
+            { elementID: "sb-Stats-name-classic", value: color });
+        ipcRenderer.send('change-color',
             { elementID: "sb-heading", value: color });
             ipcRenderer.send('change-color', 
             { elementID: "sb-scoreR", value: color });
@@ -1382,6 +1384,18 @@ function templateChange() {
     let objS = document.getElementById("selectTemplates");
     let value = objS.options[objS.selectedIndex].value;
     console.log(value)
+    if (value === "classic") {
+        ipcRenderer.send('change-score-board-window-size',
+            { width: 700, height: 190 });
+        ipcRenderer.send('change-grid-template-columns',
+            { elementID: "sb-Stats-name-classic", value: "auto 260px" });
+    } else if  (value === "icon") {
+        ipcRenderer.send('change-score-board-window-size',
+            { width: 550, height: 138 });
+        ipcRenderer.send('change-grid-template-columns',
+            { elementID: "sb-Stats-name-classic", value: "auto 290px" });
+    }
+
 }
 // const actionsList = [];
 // const lastAction = document.querySelector('input')
