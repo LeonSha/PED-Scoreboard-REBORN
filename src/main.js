@@ -107,6 +107,15 @@ ipcMain.on('change-grid-template-rows', (event, arg) => {
   windowScoreboard.webContents.send('change-grid-template-rows', arg);
 });
 
+ipcMain.on('change-font-size', (event, arg) => {
+  windowScoreboard.webContents.send('change-font-size', arg);
+});
+
+ipcMain.on('change-display', (event, arg) => {
+  windowScoreboard.webContents.send('change-display', arg);
+});
+
+
 ipcMain.on('change-score-board-window-size', (event, arg) => {
   windowScoreboard.setSize(arg.width, arg.height, false);
 });

@@ -1386,14 +1386,30 @@ function templateChange() {
     console.log(value)
     if (value === "classic") {
         ipcRenderer.send('change-score-board-window-size',
-            { width: 700, height: 190 });
+            { width: 600, height: 190 });
         ipcRenderer.send('change-grid-template-columns',
-            { elementID: "sb-Stats-name-classic", value: "auto 260px" });
+            { elementID: "sb-main-container", value: "auto 260px" });
+        ipcRenderer.send('change-grid-template-rows',
+            { elementID: "sb-teams-container", value: "75px 75px" });
+        ipcRenderer.send('change-font-size',
+            { elementID: "sb-teams-container", value: "45pt" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-Stats-name", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-Stats-name-classic", value: "inherit" });
     } else if  (value === "icon") {
         ipcRenderer.send('change-score-board-window-size',
             { width: 550, height: 138 });
         ipcRenderer.send('change-grid-template-columns',
-            { elementID: "sb-Stats-name-classic", value: "auto 290px" });
+            { elementID: "sb-main-container", value: "auto 290px" });
+        ipcRenderer.send('change-grid-template-rows',
+            { elementID: "sb-teams-container", value: "52px 46px" });
+        ipcRenderer.send('change-font-size',
+            { elementID: "sb-teams-container", value: "28pt" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-Stats-name", value: "inherit" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-Stats-name-classic", value: "none" });
     }
 
 }

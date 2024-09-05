@@ -17,3 +17,11 @@ ipcRenderer.on('change-grid-template-columns', (event, arg) => {
 ipcRenderer.on('change-grid-template-rows', (event, arg) => {
     document.getElementById(arg.elementID).style.gridTemplateRows = arg.value;
 });
+
+ipcRenderer.on('change-font-size', (event, arg) => {
+    document.getElementById(arg.elementID).style.fontSize = arg.value;
+});
+
+ipcRenderer.on('change-display', (event, arg) => {
+    document.getElementById(arg.elementID).style.display = arg.value;
+});

@@ -43,10 +43,10 @@ main {
   display: grid;
   grid-template-columns: auto 75px;
   align-items: stretch;
-  grid-template-rows: 75px 75px;
-  font-size: 45pt;
-  /*grid-template-rows: 52px 46px;*/
-  /*font-size: 28pt;*/
+  /*grid-template-rows: 75px 75px;*/
+  /*font-size: 45pt;*/
+  grid-template-rows: 52px 46px;
+  font-size: 28pt;
 }
 
 #sb-Visitor-name, #sb-Home-name {
