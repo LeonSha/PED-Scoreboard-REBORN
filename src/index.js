@@ -471,6 +471,9 @@ let adjustProgress = function(amount) {
 };
 
 let changeInningsColor = function(team, inning, idx) {
+    let objS = document.getElementById("selectTemplates");
+    let value = objS.options[objS.selectedIndex].value;
+
     let nowInning = Math.floor(now/4) + 1;
 
     let visitGrey = false
@@ -495,21 +498,33 @@ let changeInningsColor = function(team, inning, idx) {
     let teamId = "sb-" + team + "-score" + idx
     if (score === 0) {
         let backGroundColor = inputStatsColor.value;
+        let zeroScore = ""
         if (setGrey) {
-            backGroundColor = "grey 80%, black"
+            if (value === "icon") {
+                backGroundColor = "grey 80%, black"
+            } else {
+                zeroScore = "0"
+            }
         }
         if (backGroundColor.includes(",")) {
             backGroundColor = "linear-gradient(" + backGroundColor + ")";
         }
-        ipcRenderer.send('change-color',{ elementID: teamId, value: backGroundColor });
-        ipcRenderer.send('update-scoreboard', {elementID: teamId, value: ""})
-        ipcRenderer.send('change-foreground-color',{ elementID: teamId, value: "white" });
+        ipcRenderer.send('change-color', {elementID: teamId, value: backGroundColor});
+        ipcRenderer.send('update-scoreboard', {elementID: teamId, value: zeroScore})
+        ipcRenderer.send('change-foreground-color', {elementID: teamId, value: "white"});
     } else {
         ipcRenderer.send('update-scoreboard', {elementID: teamId, value: score})
-        let backGroundColor = "yellow 80%, grey";
-        backGroundColor = "linear-gradient(" + backGroundColor + ")";
+        let backGroundColor = inputStatsColor.value;
+        let foreGroundColor = "white"
+        if (value === "icon") {
+            backGroundColor = "yellow 80%, grey";
+            foreGroundColor = "black"
+        }
+        if (backGroundColor.includes(",")) {
+            backGroundColor = "linear-gradient(" + backGroundColor + ")";
+        }
         ipcRenderer.send('change-color',{ elementID: teamId, value:  backGroundColor });
-        ipcRenderer.send('change-foreground-color',{ elementID: teamId, value: "black" });
+        ipcRenderer.send('change-foreground-color',{ elementID: teamId, value: foreGroundColor });
     }
 }
 //
@@ -1367,14 +1382,14 @@ let adjustColor = function(team, color, read) {
 //
 let setFinal = function(progress, inningsToFinal) {
     let finalInn = Math.floor(progress/4) + 1;
-    if (finalInn == inningsToFinal) {
-        ipcRenderer.send('update-scoreboard', 
-        { elementID: "sb-progress", value: "F" });
-    }
-    else {
-        ipcRenderer.send('update-scoreboard', 
-       { elementID: "sb-progress", value: "F/" + finalInn });
-    }
+    let finalStr = "F/" + finalInn
+    // if (finalInn === inningsToFinal) {
+    //     finalStr = "F"
+    // }
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-progress", value: finalStr });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "sb-heading", value: finalStr });
     resetCount();
     clearAllBases();
     resetOuts();
@@ -1383,7 +1398,6 @@ let setFinal = function(progress, inningsToFinal) {
 function templateChange() {
     let objS = document.getElementById("selectTemplates");
     let value = objS.options[objS.selectedIndex].value;
-    console.log(value)
     if (value === "classic") {
         ipcRenderer.send('change-score-board-window-size',
             { width: 600, height: 190 });
@@ -1411,7 +1425,8 @@ function templateChange() {
         ipcRenderer.send('change-display',
             { elementID: "sb-Stats-name-classic", value: "none" });
     }
-
+    updateTotalRuns("Visitor");
+    updateTotalRuns("Home");
 }
 // const actionsList = [];
 // const lastAction = document.querySelector('input')
