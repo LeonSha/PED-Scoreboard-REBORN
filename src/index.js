@@ -245,7 +245,7 @@ fs.readFile(obsdir + "/Visitor_Color.txt", function(err, data) {
 });
 fs.readFile(obsdir + "/Home_Color.txt", function(err, data) {
     if (err) {
-        fs.writeFileSync(obsdir + "/Home_Color.txt", "darkblue");
+        fs.writeFileSync(obsdir + "/Home_Color.txt", "purple 80%, white");
         inputHomeColor.value = "darkblue";
     }
     else {
@@ -256,8 +256,8 @@ fs.readFile(obsdir + "/Home_Color.txt", function(err, data) {
 });
 fs.readFile(obsdir + "/Stats_Color.txt", function(err, data) {
     if (err) {
-        fs.writeFileSync(obsdir + "/Stats_Color.txt", "black");
-        inputStatsColor.value = "black";
+        fs.writeFileSync(obsdir + "/Stats_Color.txt", "black 80%, grey");
+        inputStatsColor.value = "black 80%, grey";
     }
     else {
         inputStatsColor.value = data.toString();
