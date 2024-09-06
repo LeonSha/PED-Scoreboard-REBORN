@@ -246,7 +246,7 @@ fs.readFile(obsdir + "/Visitor_Color.txt", function(err, data) {
 fs.readFile(obsdir + "/Home_Color.txt", function(err, data) {
     if (err) {
         fs.writeFileSync(obsdir + "/Home_Color.txt", "purple 80%, white");
-        inputHomeColor.value = "darkblue";
+        inputHomeColor.value = "purple 80%, white";
     }
     else {
         inputHomeColor.value = data.toString();
