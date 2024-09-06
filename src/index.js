@@ -234,8 +234,8 @@ fs.readFile(obsdir + "/Home_Name.txt", function(err, data) {
 });
 fs.readFile(obsdir + "/Visitor_Color.txt", function(err, data) {
     if (err) {
-        fs.writeFileSync(obsdir + "/Visitor_Color.txt", "darkgreen");
-        inputVisitorColor.value = "darkgreen";
+        fs.writeFileSync(obsdir + "/Visitor_Color.txt", "red 80%, white");
+        inputVisitorColor.value = "red 80%, white";
     }
     else {
         inputVisitorColor.value = data.toString();
