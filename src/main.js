@@ -47,6 +47,8 @@ const createWindow = () => {
     icon: appIcon,
    width: 1090,
    height: 260,
+    transparent: true,
+    frame: false,
    webPreferences: {
      nodeIntegration: true,
      contextIsolation: false,
@@ -54,7 +56,7 @@ const createWindow = () => {
    }
  });
   windowInnings.setMenu(null);
-  windowInnings.loadFile(path.join(__dirname, 'innings.html'));
+  windowInnings.loadFile(path.join(__dirname, 'innings_wbsc_2024.html'));
   windowInnings.setPosition(400, 300, false)
 
   // windowscoreShort = new BrowserWindow({
