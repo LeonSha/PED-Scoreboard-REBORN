@@ -11,7 +11,7 @@ main {
 }
 
 .grid-tournament-container {
-    border-radius: 25px;
+    border-radius: 10px;
     background: linear-gradient(0deg, darkblue, transparent 50%, darkblue);
     padding-top: 15px;
     text-align: center;
@@ -30,7 +30,7 @@ main {
     grid-template-columns: auto 20px 75px 75px 75px 75px 75px 75px 75px 20px 75px 75px 75px 40px;
     align-items: stretch;
     grid-template-rows: 40px 100px;
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: darkorange;
     color: black;
     font-size: 40px;
@@ -46,11 +46,11 @@ main {
     grid-template-columns: auto 20px 525px 20px 225px 40px;
     align-items: stretch;
     grid-template-rows: 50px 50px;
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: darkblue;
 }
 
-#sb-inning-1, #sb-inning-2, #sb-inning-3, #sb-inning-4, #sb-inning-5, #sb-inning-6, #sb-inning-7, #sb-score-R, #sb-score-H, #sb-score-E {
+#sb-inning1, #sb-inning2, #sb-inning3, #sb-inning4, #sb-inning5, #sb-inning6, #sb-inning7, #sb-scoreR, #sb-scoreH, #sb-scoreE {
     text-align: center;
     font-size: 80%;
 }
@@ -71,13 +71,15 @@ main {
     display: grid;
     border-radius: 5px;
     color: white;
+    background-color: lightblue;
 }
 
 #sb-Visitor-rhe-container, #sb-Home-rhe-container {
     grid-template-columns:repeat(3, 75px);
     display: grid;
     border-radius: 5px;
-    color: white;
+    color: black;
+    background-color: yellow;
 }
 
 #sb-Visitor-name, #sb-Visitor-score-container, #sb-Visitor-rhe-container {
@@ -93,7 +95,7 @@ main {
 #sb-Visitor-score1, #sb-Visitor-score2, #sb-Visitor-score3, #sb-Visitor-score4, #sb-Visitor-score5, #sb-Visitor-score6, #sb-Visitor-score7, #sb-Home-score1, #sb-Home-score2, #sb-Home-score3, #sb-Home-score4, #sb-Home-score5, #sb-Home-score6, #sb-Home-score7 {
     font-size: 75%;
     text-align: center;
-    background-color: lightblue;
+    background-color: lightslategrey;
     border-radius: 5px;
     margin: 3px;
 }
@@ -101,7 +103,7 @@ main {
 #sb-Visitor-scoreR, #sb-Visitor-scoreH, #sb-Visitor-scoreE, #sb-Home-scoreR, #sb-Home-scoreH, #sb-Home-scoreE {
     font-size: 75%;
     text-align: center;
-    background-color: yellow;
+    background-color: darkorange;
     border-radius: 5px;
     margin: 3px;
 }
