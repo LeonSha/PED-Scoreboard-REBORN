@@ -28,7 +28,7 @@ main {
   grid-template-columns: auto 75px 120px;
   font-family: 'Montserrat';
   font-weight: bold;
-  font-size: 30pt;
+  font-size: 40px;
   grid-template-rows: 50px 50px;
   border-radius: 10px;
   background: darkblue;
@@ -60,14 +60,17 @@ main {
 
 .grid-stats-container {
   display: grid;
-  grid-template-columns: auto 30px 75px 120px;
-  grid-template-rows: 30px;
+  grid-template-columns: auto 10px 40px 30px 75px 120px;
+  grid-template-rows: 50px;
   background-color: lightblue;
   font-family: 'Montserrat';
   font-weight: bold;
-  font-size: 25px;
+  font-size: 30px;
+  border-radius: 10px;
 }
-
+#sb-outs,#sb-count, #sb-progress-text, #sb-progress-icon {
+  padding-top: 10px;
+}
 #sb-progress-text{
   text-align: right;
 }
