@@ -25,7 +25,7 @@ main {
     color: white;
 }
 
-.grid-innings-container {
+.grid-innings-container-w {
     font-family: 'Montserrat';
     font-weight: bold;
     display: grid;
@@ -41,7 +41,7 @@ main {
     font-size: 40px;
 }
 
-.grid-teams-container {
+.grid-teams-container-w {
     grid-column: 1 / 15;
     grid-row: 2 / 2;
 
@@ -55,12 +55,12 @@ main {
     background-color: darkblue;
 }
 
-#sb-inning1, #sb-inning2, #sb-inning3, #sb-inning4, #sb-inning5, #sb-inning6, #sb-inning7, #sb-scoreR, #sb-scoreH, #sb-scoreE {
+#wsb-inning1, #wsb-inning2, #wsb-inning3, #wsb-inning4, #wsb-inning5, #wsb-inning6, #wsb-inning7, #wsb-scoreR, #wsb-scoreH, #wsb-scoreE {
     text-align: center;
     font-size: 80%;
 }
 
-#sb-Visitor-name, #sb-Home-name {
+#wsb-Visitor-name, #wsb-Home-name {
     font-size: 80%;
     color: white;
     text-align: right;
@@ -71,7 +71,7 @@ main {
     border-radius: 5px;
 }
 
-#sb-Visitor-score-container, #sb-Home-score-container {
+#wsb-Visitor-score-container, #wsb-Home-score-container {
     grid-template-columns:repeat(7, 75px);
     display: grid;
     border-radius: 5px;
@@ -80,7 +80,7 @@ main {
     background: linear-gradient(#CBCED8, #5A677D);
 }
 
-#sb-Visitor-rhe-container, #sb-Home-rhe-container {
+#wsb-Visitor-rhe-container, #wsb-Home-rhe-container {
     grid-template-columns:repeat(3, 75px);
     display: grid;
     border-radius: 5px;
@@ -89,17 +89,17 @@ main {
     /*background: linear-gradient(#face23,#e79126);*/
 }
 
-#sb-Visitor-name, #sb-Visitor-score-container, #sb-Visitor-rhe-container {
+#wsb-Visitor-name, #wsb-Visitor-score-container, #wsb-Visitor-rhe-container {
     margin-top: 5px;
     margin-bottom: 2px;
 }
 
-#sb-Home-name, #sb-Home-score-container, #sb-Home-rhe-container {
+#wsb-Home-name, #wsb-Home-score-container, #wsb-Home-rhe-container {
     margin-top: 2px;
     margin-bottom: 5px;
 }
 
-#sb-Visitor-score1, #sb-Visitor-score2, #sb-Visitor-score3, #sb-Visitor-score4, #sb-Visitor-score5, #sb-Visitor-score6, #sb-Visitor-score7, #sb-Home-score1, #sb-Home-score2, #sb-Home-score3, #sb-Home-score4, #sb-Home-score5, #sb-Home-score6, #sb-Home-score7 {
+#wsb-Visitor-score1, #wsb-Visitor-score2, #wsb-Visitor-score3, #wsb-Visitor-score4, #wsb-Visitor-score5, #wsb-Visitor-score6, #wsb-Visitor-score7, #wsb-Home-score1, #wsb-Home-score2, #wsb-Home-score3, #wsb-Home-score4, #wsb-Home-score5, #wsb-Home-score6, #wsb-Home-score7 {
     font-size: 75%;
     text-align: center;
     /*background-color: #3C5694;*/
@@ -110,7 +110,7 @@ main {
     /*color: white;*/
 }
 
-#sb-Visitor-scoreR, #sb-Visitor-scoreH, #sb-Visitor-scoreE, #sb-Home-scoreR, #sb-Home-scoreH, #sb-Home-scoreE {
+#wsb-Visitor-scoreR, #wsb-Visitor-scoreH, #wsb-Visitor-scoreE, #wsb-Home-scoreR, #wsb-Home-scoreH, #wsb-Home-scoreE {
     font-size: 75%;
     text-align: center;
     /*background-color: #F3D922;*/

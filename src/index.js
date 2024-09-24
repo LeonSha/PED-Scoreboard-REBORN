@@ -1413,10 +1413,6 @@ function templateChange() {
     let value = objS.options[objS.selectedIndex].value;
     fs.writeFileSync(obsdir + "/Templates.txt", value);
     if (value === "classic") {
-        ipcRenderer.send('change-score-board-content',
-            { filename: "scoreboard.html" });
-        ipcRenderer.send('change-innings-content',
-            { filename: "innings.html" });
         ipcRenderer.send('change-score-board-window-size',
             { width: 650, height: 155 });
         ipcRenderer.send('change-grid-template-columns',
@@ -1429,15 +1425,7 @@ function templateChange() {
             { elementID: "sb-Stats-name", value: "none" });
         ipcRenderer.send('change-display',
             { elementID: "sb-Stats-name-classic", value: "inherit" });
-        adjustColor("Visitor", document.getElementById("inputVisitorColor").value, false);
-        adjustColor("Home", document.getElementById("inputHomeColor").value, false);
-        adjustColor("Stats", document.getElementById("inputStatsColor").value, false);
-
     } else if  (value === "icon") {
-        ipcRenderer.send('change-score-board-content',
-            { filename: "scoreboard.html" });
-        ipcRenderer.send('change-innings-content',
-            { filename: "innings.html" });
         ipcRenderer.send('change-score-board-window-size',
             { width: 600, height: 100 });
         ipcRenderer.send('change-grid-template-columns',
@@ -1450,20 +1438,9 @@ function templateChange() {
             { elementID: "sb-Stats-name", value: "inherit" });
         ipcRenderer.send('change-display',
             { elementID: "sb-Stats-name-classic", value: "none" });
-        adjustColor("Visitor", document.getElementById("inputVisitorColor").value, false);
-        adjustColor("Home", document.getElementById("inputHomeColor").value, false);
-        adjustColor("Stats", document.getElementById("inputStatsColor").value, false);
     } else if  (value === "wbsc_blue") {
-        ipcRenderer.send('change-score-board-content',
-            { filename: "scoreboard_wbsc_2024.html" });
-        ipcRenderer.send('change-innings-content',
-            { filename: "innings_wbsc_2024.html" });
 
     } else if  (value === "wbsc_silver") {
-        ipcRenderer.send('change-score-board-content',
-            { filename: "scoreboard_wbsc_2024.html" });
-        ipcRenderer.send('change-innings-content',
-            { filename: "innings_wbsc_2024.html" });
     }
     updateTotalRuns("Visitor");
     updateTotalRuns("Home");

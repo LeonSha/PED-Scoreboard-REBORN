@@ -125,13 +125,6 @@ ipcMain.on('change-score-board-window-size', (event, arg) => {
     windowScoreboard.setSize(arg.width, arg.height, false);
 });
 
-ipcMain.on('change-score-board-content', (event, arg) => {
-    windowScoreboard.loadFile(path.join(__dirname, arg.filename))
-});
-
-ipcMain.on('change-innings-content', (event, arg) => {
-    windowInnings.loadFile(path.join(__dirname, arg.filename))
-});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

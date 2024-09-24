@@ -1,10 +1,7 @@
 body {
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; */
-  /* margin: auto; */
-  /* max-width: 38rem; */
   margin: 0;
   padding: 0;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0);
   color: white;
   overflow: hidden; /* hides scrollbars */
 }
@@ -80,3 +77,116 @@ main {
   background: black;
   border-bottom: 4px solid rgb(223, 223, 223);
 }
+
+
+.grid-tournament-container {
+  border-radius: 10px;
+  background: linear-gradient(0deg, darkblue, transparent 50%, darkblue);
+  padding-top: 15px;
+  text-align: center;
+}
+
+.grid-tournament-container span {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  font-size: 15px;
+  /*color:#e79126;*/
+  color: white;
+}
+
+.grid-innings-container-w {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: auto 20px 75px 75px 75px 75px 75px 75px 75px 20px 75px 75px 75px 40px;
+  align-items: stretch;
+  grid-template-rows: 40px 100px;
+  border-radius: 10px;
+  background-color:  #c8c7cc;
+  /*background: linear-gradient(#face23,#e79126 ,transparent 50%);*/
+  /*color: black;*/
+  color: #314b6f;
+
+  font-size: 40px;
+}
+
+.grid-teams-container-w {
+  grid-column: 1 / 15;
+  grid-row: 2 / 2;
+
+  font-family: 'Montserrat';
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: auto 20px 525px 20px 225px 40px;
+  align-items: stretch;
+  grid-template-rows: 50px 50px;
+  border-radius: 10px;
+  background-color: darkblue;
+}
+
+#wsb-inning1, #wsb-inning2, #wsb-inning3, #wsb-inning4, #wsb-inning5, #wsb-inning6, #wsb-inning7, #wsb-scoreR, #wsb-scoreH, #wsb-scoreE {
+  text-align: center;
+  font-size: 80%;
+}
+
+#wsb-Visitor-name, #wsb-Home-name {
+  font-size: 80%;
+  color: white;
+  text-align: right;
+  /*background-color: #3C5694;*/
+  background-color: #9795A9;
+  margin-left: 20px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+
+#wsb-Visitor-score-container, #wsb-Home-score-container {
+  grid-template-columns:repeat(7, 75px);
+  display: grid;
+  border-radius: 5px;
+  color: white;
+  /*background: linear-gradient(#5067A7, #283865);*/
+  background: linear-gradient(#CBCED8, #5A677D);
+}
+
+#wsb-Visitor-rhe-container, #wsb-Home-rhe-container {
+  grid-template-columns:repeat(3, 75px);
+  display: grid;
+  border-radius: 5px;
+  color: black;
+  background: linear-gradient(#d32f6e, #8c0c3d);
+  /*background: linear-gradient(#face23,#e79126);*/
+}
+
+#wsb-Visitor-name, #wsb-Visitor-score-container, #wsb-Visitor-rhe-container {
+  margin-top: 5px;
+  margin-bottom: 2px;
+}
+
+#wsb-Home-name, #wsb-Home-score-container, #wsb-Home-rhe-container {
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+#wsb-Visitor-score1, #wsb-Visitor-score2, #wsb-Visitor-score3, #wsb-Visitor-score4, #wsb-Visitor-score5, #wsb-Visitor-score6, #wsb-Visitor-score7, #wsb-Home-score1, #wsb-Home-score2, #wsb-Home-score3, #wsb-Home-score4, #wsb-Home-score5, #wsb-Home-score6, #wsb-Home-score7 {
+  font-size: 75%;
+  text-align: center;
+  /*background-color: #3C5694;*/
+  background-color: #B1B5BE;
+  border-radius: 5px;
+  margin: 3px;
+  color: #314b6f;
+  /*color: white;*/
+}
+
+#wsb-Visitor-scoreR, #wsb-Visitor-scoreH, #wsb-Visitor-scoreE, #wsb-Home-scoreR, #wsb-Home-scoreH, #wsb-Home-scoreE {
+  font-size: 75%;
+  text-align: center;
+  /*background-color: #F3D922;*/
+  background-color: #AF1C58;
+  /*color: black;*/
+  color: white;
+  border-radius: 5px;
+  margin: 3px;
+}
+
