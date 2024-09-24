@@ -42,6 +42,7 @@ main {
 #sb-heading {
   text-align: right;
   border-right: 4px solid rgb(223, 223, 223);
+  border-left: 4px solid rgb(223, 223, 223);
   font-size: 70%;
   padding-top: 2%;
   border-top: 4px solid rgb(223, 223, 223);

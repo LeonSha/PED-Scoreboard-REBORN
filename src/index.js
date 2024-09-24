@@ -266,6 +266,19 @@ fs.readFile(obsdir + "/Stats_Color.txt", function(err, data) {
     adjustColor("Stats", inputStatsColor.value, true);
 });
 
+fs.readFile(obsdir + "/Templates.txt", function(err, data) {
+    if (err) {
+        fs.writeFileSync(obsdir + "/Templates.txt", "icon");
+    }
+    else {
+        let objS = document.getElementById("selectTemplates");
+        objS.value = data.toString();
+        templateChange()
+    }
+
+
+});
+
 //
 // figure out the current (editing) inning on startup
 // if no inning.txt exists, create it, set to first inning
@@ -1398,9 +1411,14 @@ let setFinal = function(progress, inningsToFinal) {
 function templateChange() {
     let objS = document.getElementById("selectTemplates");
     let value = objS.options[objS.selectedIndex].value;
+    fs.writeFileSync(obsdir + "/Templates.txt", value);
     if (value === "classic") {
+        ipcRenderer.send('change-score-board-content',
+            { filename: "scoreboard.html" });
+        ipcRenderer.send('change-innings-content',
+            { filename: "innings.html" });
         ipcRenderer.send('change-score-board-window-size',
-            { width: 600, height: 190 });
+            { width: 650, height: 155 });
         ipcRenderer.send('change-grid-template-columns',
             { elementID: "sb-main-container", value: "auto 260px" });
         ipcRenderer.send('change-grid-template-rows',
@@ -1411,9 +1429,17 @@ function templateChange() {
             { elementID: "sb-Stats-name", value: "none" });
         ipcRenderer.send('change-display',
             { elementID: "sb-Stats-name-classic", value: "inherit" });
+        adjustColor("Visitor", document.getElementById("inputVisitorColor").value, false);
+        adjustColor("Home", document.getElementById("inputHomeColor").value, false);
+        adjustColor("Stats", document.getElementById("inputStatsColor").value, false);
+
     } else if  (value === "icon") {
+        ipcRenderer.send('change-score-board-content',
+            { filename: "scoreboard.html" });
+        ipcRenderer.send('change-innings-content',
+            { filename: "innings.html" });
         ipcRenderer.send('change-score-board-window-size',
-            { width: 550, height: 138 });
+            { width: 600, height: 100 });
         ipcRenderer.send('change-grid-template-columns',
             { elementID: "sb-main-container", value: "auto 290px" });
         ipcRenderer.send('change-grid-template-rows',
@@ -1424,6 +1450,20 @@ function templateChange() {
             { elementID: "sb-Stats-name", value: "inherit" });
         ipcRenderer.send('change-display',
             { elementID: "sb-Stats-name-classic", value: "none" });
+        adjustColor("Visitor", document.getElementById("inputVisitorColor").value, false);
+        adjustColor("Home", document.getElementById("inputHomeColor").value, false);
+        adjustColor("Stats", document.getElementById("inputStatsColor").value, false);
+    } else if  (value === "wbsc_blue") {
+        ipcRenderer.send('change-score-board-content',
+            { filename: "scoreboard_wbsc_2024.html" });
+        ipcRenderer.send('change-innings-content',
+            { filename: "innings_wbsc_2024.html" });
+
+    } else if  (value === "wbsc_silver") {
+        ipcRenderer.send('change-score-board-content',
+            { filename: "scoreboard_wbsc_2024.html" });
+        ipcRenderer.send('change-innings-content',
+            { filename: "innings_wbsc_2024.html" });
     }
     updateTotalRuns("Visitor");
     updateTotalRuns("Home");

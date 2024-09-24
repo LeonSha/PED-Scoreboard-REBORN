@@ -11,6 +11,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 let windowMain;
 let windowScoreboard;
+let windowInnings;
 let appIcon = 'PED Scoreboard REBORN Logo Transparent.ico';
 
 const createWindow = () => {
@@ -33,7 +34,7 @@ const createWindow = () => {
     windowScoreboard = new BrowserWindow({
         icon: appIcon,
         width: 600,
-        height: 138,
+        height: 100,
         transparent: true,
         frame: false,
         webPreferences: {
@@ -42,8 +43,8 @@ const createWindow = () => {
             devTools: true
         }
     });
-    windowScoreboard.setMenu(null);
-    windowScoreboard.loadFile(path.join(__dirname, 'scoreboard_wbsc_2024.html'));
+    // windowScoreboard.setMenu(null);
+    windowScoreboard.loadFile(path.join(__dirname, 'scoreboard.html'));
     windowScoreboard.setPosition(400, 100, false)
 
     windowInnings = new BrowserWindow({
@@ -58,8 +59,8 @@ const createWindow = () => {
             devTools: true
         }
     });
-    windowInnings.setMenu(null);
-    windowInnings.loadFile(path.join(__dirname, 'innings_wbsc_2024.html'));
+    // windowInnings.setMenu(null);
+    windowInnings.loadFile(path.join(__dirname, 'innings.html'));
     windowInnings.setPosition(400, 300, false)
 
     // windowscoreShort = new BrowserWindow({
@@ -122,6 +123,14 @@ ipcMain.on('change-display', (event, arg) => {
 
 ipcMain.on('change-score-board-window-size', (event, arg) => {
     windowScoreboard.setSize(arg.width, arg.height, false);
+});
+
+ipcMain.on('change-score-board-content', (event, arg) => {
+    windowScoreboard.loadFile(path.join(__dirname, arg.filename))
+});
+
+ipcMain.on('change-innings-content', (event, arg) => {
+    windowInnings.loadFile(path.join(__dirname, arg.filename))
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
