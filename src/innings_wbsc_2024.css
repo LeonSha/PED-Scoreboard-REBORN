@@ -21,6 +21,8 @@ main {
     font-family: 'Montserrat';
     font-weight: bold;
     font-size: 15px;
+    /*color:#e79126;*/
+    color: white;
 }
 
 .grid-innings-container {
@@ -31,8 +33,11 @@ main {
     align-items: stretch;
     grid-template-rows: 40px 100px;
     border-radius: 10px;
-    background-color: darkorange;
-    color: black;
+    background-color:  #c8c7cc;
+    /*background: linear-gradient(#face23,#e79126 ,transparent 50%);*/
+    /*color: black;*/
+    color: #314b6f;
+
     font-size: 40px;
 }
 
@@ -59,7 +64,8 @@ main {
     font-size: 80%;
     color: white;
     text-align: right;
-    background-color: lightblue;
+    /*background-color: #3C5694;*/
+    background-color: #9795A9;
     margin-left: 20px;
     padding-right: 10px;
     border-radius: 5px;
@@ -70,7 +76,8 @@ main {
     display: grid;
     border-radius: 5px;
     color: white;
-    background-color: lightblue;
+    /*background: linear-gradient(#5067A7, #283865);*/
+    background: linear-gradient(#CBCED8, #5A677D);
 }
 
 #sb-Visitor-rhe-container, #sb-Home-rhe-container {
@@ -78,7 +85,8 @@ main {
     display: grid;
     border-radius: 5px;
     color: black;
-    background-color: yellow;
+    background: linear-gradient(#d32f6e, #8c0c3d);
+    /*background: linear-gradient(#face23,#e79126);*/
 }
 
 #sb-Visitor-name, #sb-Visitor-score-container, #sb-Visitor-rhe-container {
@@ -94,15 +102,21 @@ main {
 #sb-Visitor-score1, #sb-Visitor-score2, #sb-Visitor-score3, #sb-Visitor-score4, #sb-Visitor-score5, #sb-Visitor-score6, #sb-Visitor-score7, #sb-Home-score1, #sb-Home-score2, #sb-Home-score3, #sb-Home-score4, #sb-Home-score5, #sb-Home-score6, #sb-Home-score7 {
     font-size: 75%;
     text-align: center;
-    background-color: lightslategrey;
+    /*background-color: #3C5694;*/
+    background-color: #B1B5BE;
     border-radius: 5px;
     margin: 3px;
+    color: #314b6f;
+    /*color: white;*/
 }
 
 #sb-Visitor-scoreR, #sb-Visitor-scoreH, #sb-Visitor-scoreE, #sb-Home-scoreR, #sb-Home-scoreH, #sb-Home-scoreE {
     font-size: 75%;
     text-align: center;
-    background-color: darkorange;
+    /*background-color: #F3D922;*/
+    background-color: #AF1C58;
+    /*color: black;*/
+    color: white;
     border-radius: 5px;
     margin: 3px;
 }

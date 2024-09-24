@@ -12,7 +12,7 @@ main {
 
 .grid-tournament-container {
   border-radius: 10px;
-  background: linear-gradient(0deg, royalblue, transparent 50%, royalblue);
+  background: linear-gradient(0deg, darkblue, transparent 50%, darkblue);
   padding-top: 15px;
   text-align: center;
 }
@@ -21,6 +21,8 @@ main {
   font-family: 'Montserrat';
   font-weight: bold;
   font-size: 15px;
+  /*color: #e5ad1a;*/
+  color: white;
 }
 
 .grid-main-container {
@@ -47,15 +49,17 @@ main {
   text-align: right;
   padding-right: 15px;
   background: linear-gradient(#3f57ad, #1b2b69);
-  margin-left: 5px;
-  border-radius: 5px;
-
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 
 #sb-Visitor-scoreR, #sb-Home-scoreR {
   color: white;
+  /*color: black;*/
+  /*theme - silver red */
   background: linear-gradient(#d32f6e, #8c0c3d);
+  /*background: linear-gradient(#ffe52e, #e5ad1a);*/
   text-align: center;
   font-size: 90%;
   padding-top: 6%;
@@ -66,7 +70,9 @@ main {
   display: grid;
   grid-template-columns: auto 10px 40px 30px 75px 120px;
   grid-template-rows: 50px;
+  /*theme - silver red */
   background-color: #c8c7cc;
+  /*background: linear-gradient(#3f57ad, #1b2b69);*/
   font-family: 'Montserrat';
   font-weight: bold;
   font-size: 30px;
@@ -74,9 +80,13 @@ main {
 }
 #sb-outs,#sb-count, #sb-progress-text, #sb-progress-icon {
   padding-top: 10px;
+  /*theme - silver red */
   color: black;
+  /*color: white;*/
 }
 #sb-progress-text{
   text-align: right;
+  /*theme - silver red */
   color:#314b6f ;
+  /*color: white;*/
 }
