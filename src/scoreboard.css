@@ -48,9 +48,9 @@ main {
   font-size: 45pt;
 }
 
-#sb-Visitor-name, #sb-Home-name {
+#sb-Visitor-name, #sb-Home-name, #csb-Visitor-name, #csb-Home-name {
   color: white;
-  text-shadow: #141418;
+  text-shadow: 1px 1px #141418;
   text-align: right;
   padding-right: 15px;
 }

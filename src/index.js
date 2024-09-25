@@ -236,7 +236,7 @@ fs.readFile(obsdir + "/Visitor_Name.txt", function(err, data) {
     }
     // send Visitor Name to new Scoreboard
     ipcRenderer.send('update-scoreboard', 
-        { elementID: "sb-Visitor-name", value: inputVisitorName.value });
+        { className: "sb-Visitor-name", value: inputVisitorName.value });
 });
 fs.readFile(obsdir + "/Home_Name.txt", function(err, data) {
     if (err) {
@@ -247,7 +247,7 @@ fs.readFile(obsdir + "/Home_Name.txt", function(err, data) {
         inputHomeName.value = data.toString();
     }
     ipcRenderer.send('update-scoreboard',
-        { elementID: "sb-Home-name", value: inputHomeName.value });
+        { className: "sb-Home-name", value: inputHomeName.value });
 });
 fs.readFile(obsdir + "/Visitor_Color.txt", function(err, data) {
     if (err) {
@@ -1378,11 +1378,11 @@ let adjustColor = function(team, color, read) {
     if (team === "Home" || team === "Visitor") {
         ipcRenderer.send('change-color', 
         { elementID: "sb-" + team + "-name", value: color });
-        ipcRenderer.send('change-color', 
+        ipcRenderer.send('change-color',
             { elementID: "sb-" + team + "-scoreR", value: color });
-        ipcRenderer.send('change-color', 
+        ipcRenderer.send('change-color',
             { elementID: "sb-" + team + "-scoreH", value: color });
-        ipcRenderer.send('change-color', 
+        ipcRenderer.send('change-color',
             { elementID: "sb-" + team + "-scoreE", value: color });
     }
     
@@ -1394,20 +1394,20 @@ let adjustColor = function(team, color, read) {
             { elementID: "sb-Stats-name-classic", value: color });
         ipcRenderer.send('change-color',
             { elementID: "sb-heading", value: color });
-            ipcRenderer.send('change-color', 
+            ipcRenderer.send('change-color',
             { elementID: "sb-scoreR", value: color });
-        ipcRenderer.send('change-color', 
+        ipcRenderer.send('change-color',
             { elementID: "sb-scoreH", value: color });
-        ipcRenderer.send('change-color', 
+        ipcRenderer.send('change-color',
             { elementID: "sb-scoreE", value: color });
 
     var i;
         for (i = 1; i <= maxInningsScoreboard; i++) {
-            ipcRenderer.send('change-color', 
+            ipcRenderer.send('change-color',
                 { elementID: "sb-inning" + i, value: color });
-            ipcRenderer.send('change-color', 
+            ipcRenderer.send('change-color',
                 { elementID: "sb-Visitor-score" + i, value: color });
-            ipcRenderer.send('change-color', 
+            ipcRenderer.send('change-color',
                 { elementID: "sb-Home-score" + i, value: color });
         }
     }
