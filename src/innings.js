@@ -13,3 +13,7 @@ ipcRenderer.on('change-color', (event, arg) => {
 ipcRenderer.on('change-foreground-color', (event, arg) => {
     document.getElementById(arg.elementID).style.color = arg.value;
 });
+
+ipcRenderer.on('change-display', (event, arg) => {
+    document.getElementById(arg.elementID).style.display = arg.value;
+});

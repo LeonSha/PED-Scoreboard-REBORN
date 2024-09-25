@@ -1415,32 +1415,60 @@ function templateChange() {
     if (value === "classic") {
         ipcRenderer.send('change-score-board-window-size',
             { width: 650, height: 155 });
-        ipcRenderer.send('change-grid-template-columns',
-            { elementID: "sb-main-container", value: "auto 260px" });
-        ipcRenderer.send('change-grid-template-rows',
-            { elementID: "sb-teams-container", value: "75px 75px" });
-        ipcRenderer.send('change-font-size',
-            { elementID: "sb-teams-container", value: "45pt" });
         ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name", value: "none" });
+            { elementID: "wsb-tournament-container", value: "none" });
         ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name-classic", value: "inherit" });
+            { elementID: "csb-main-container", value: "inline-grid" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "inline-grid" });
     } else if  (value === "icon") {
+        ipcRenderer.send('change-display',
+            { elementID: "wsb-tournament-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "csb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-main-container", value: "inline-grid" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "inline-grid" });
         ipcRenderer.send('change-score-board-window-size',
-            { width: 600, height: 100 });
-        ipcRenderer.send('change-grid-template-columns',
-            { elementID: "sb-main-container", value: "auto 290px" });
-        ipcRenderer.send('change-grid-template-rows',
-            { elementID: "sb-teams-container", value: "52px 46px" });
-        ipcRenderer.send('change-font-size',
-            { elementID: "sb-teams-container", value: "28pt" });
-        ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name", value: "inherit" });
-        ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name-classic", value: "none" });
+            { width: 600, height: 102 });
     } else if  (value === "wbsc_blue") {
+        ipcRenderer.send('change-score-board-window-size',
+            { width: 405, height: 185 });
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1020, height: 175 });
+        ipcRenderer.send('change-display',
+            { elementID: "wsb-tournament-container", value: "inline-grid" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "csb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "none" });
 
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-tournament-container-span", value: "#e5ad1a" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-tournament-container", value: "#e5ad1a" });
     } else if  (value === "wbsc_silver") {
+        ipcRenderer.send('change-score-board-window-size',
+            { width: 405, height: 185 });
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1020, height: 175 });
+        ipcRenderer.send('change-display',
+            { elementID: "wsb-tournament-container", value: "inline-grid" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "csb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "none" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-tournament-container-span", value: "white" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-tournament-container", value: "white" });
     }
     updateTotalRuns("Visitor");
     updateTotalRuns("Home");

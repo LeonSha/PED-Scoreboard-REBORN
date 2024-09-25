@@ -10,12 +10,8 @@ ipcRenderer.on('change-color', (event, arg) => {
     document.getElementById(arg.elementID).style.background = arg.value;
 });
 
-ipcRenderer.on('change-grid-template-columns', (event, arg) => {
-    document.getElementById(arg.elementID).style.gridTemplateColumns = arg.value;
-});
-
-ipcRenderer.on('change-grid-template-rows', (event, arg) => {
-    document.getElementById(arg.elementID).style.gridTemplateRows = arg.value;
+ipcRenderer.on('change-foreground-color', (event, arg) => {
+    document.getElementById(arg.elementID).style.color = arg.value;
 });
 
 ipcRenderer.on('change-font-size', (event, arg) => {

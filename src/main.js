@@ -104,20 +104,13 @@ ipcMain.on('change-foreground-color', (event, arg) => {
     // windowscoreShort.webContents.send('change-foreground-color', arg);
 });
 
-ipcMain.on('change-grid-template-columns', (event, arg) => {
-    windowScoreboard.webContents.send('change-grid-template-columns', arg);
-});
-
-ipcMain.on('change-grid-template-rows', (event, arg) => {
-    windowScoreboard.webContents.send('change-grid-template-rows', arg);
-});
-
 ipcMain.on('change-font-size', (event, arg) => {
     windowScoreboard.webContents.send('change-font-size', arg);
 });
 
 ipcMain.on('change-display', (event, arg) => {
     windowScoreboard.webContents.send('change-display', arg);
+    windowInnings.webContents.send('change-display', arg);
 });
 
 
@@ -125,6 +118,9 @@ ipcMain.on('change-score-board-window-size', (event, arg) => {
     windowScoreboard.setSize(arg.width, arg.height, false);
 });
 
+ipcMain.on('change-innings-window-size', (event, arg) => {
+    windowInnings.setSize(arg.width, arg.height, false);
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
