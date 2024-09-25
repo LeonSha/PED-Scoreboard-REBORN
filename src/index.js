@@ -60,6 +60,7 @@ const btnThirdBase = document.getElementById("btnThirdBase");
 
 const inputVisitorName = document.getElementById("inputVisitorName");
 const inputHomeName = document.getElementById("inputHomeName");
+const inputTournamentName = document.getElementById("inputTournamentName");
 
 // const menuVisitorLogo = document.getElementById("menuVisitorLogo");
 // const menuHomeLogo = document.getElementById("menuHomeLogo");
@@ -205,6 +206,22 @@ let initializeTeamErrors = function() {
         }    
 };
 initializeTeamErrors();
+
+//
+// read the currently saved tournament name
+//
+fs.readFile(obsdir + "/Tournament_Name.txt", function(err, data) {
+    if (err) {
+        fs.writeFileSync(obsdir + "/Tournament_Name.txt", "Tournament");
+        inputTournamentName.value = "Tournament";
+    }
+    else {
+        inputTournamentName.value = data.toString();
+    }
+    // send Visitor Name to new Scoreboard
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-tournament-container-span", value: inputTournamentName.value });
+});
 
 //
 // read the currently saved team names and colors
@@ -1105,6 +1122,16 @@ let adjustTeamName = function(team) {
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-" + team + "-name", value: newTeamName });
 };
+//
+// adjust tournament name
+//
+let adjustTournamentName = function() {
+    let filename = obsdir + "/" + "Tournament_Name.txt";
+    let newTournamentName = document.getElementById("inputTournamentName").value;
+    fs.writeFile(filename, newTournamentName, dummyError);
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-tournament-container-span", value: newTournamentName });
+};
 
 //
 //
@@ -1413,6 +1440,8 @@ function templateChange() {
     let value = objS.options[objS.selectedIndex].value;
     fs.writeFileSync(obsdir + "/Templates.txt", value);
     if (value === "classic") {
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1090, height: 260 });
         ipcRenderer.send('change-score-board-window-size',
             { width: 650, height: 155 });
         ipcRenderer.send('change-display',
@@ -1424,6 +1453,8 @@ function templateChange() {
         ipcRenderer.send('change-display',
             { elementID: "inning-main-container", value: "inline-grid" });
     } else if  (value === "icon") {
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1090, height: 260 });
         ipcRenderer.send('change-display',
             { elementID: "wsb-tournament-container", value: "none" });
         ipcRenderer.send('change-display',
@@ -1451,7 +1482,57 @@ function templateChange() {
         ipcRenderer.send('change-foreground-color',
             { elementID: "wsb-tournament-container-span", value: "#e5ad1a" });
         ipcRenderer.send('change-foreground-color',
-            { elementID: "wsb-tournament-container", value: "#e5ad1a" });
+            { elementID: "wsb-Visitor-scoreR", value: "black" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-Home-scoreR", value: "black" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Visitor-scoreR", value: "linear-gradient(#ffe52e, #e5ad1a)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Home-scoreR", value: "linear-gradient(#ffe52e, #e5ad1a)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Stats-name", value: "linear-gradient(#3f57ad, #1b2b69)" });
+        ["wsb-outs","wsb-count", "wsb-progress-text", "wsb-progress-icon"].forEach((v, index) => {
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "white" });
+        });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-progress-text", value: "white" });
+
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-innings-container", value: "linear-gradient(#face23,#e79126 ,transparent 50%)" });
+
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-innings-container", value: "black" });
+        ["wsb-Visitor-name","wsb-Home-name"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#3C5694" });
+        });
+        ["wsb-Visitor-score-container","wsb-Home-score-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#5067A7, #283865)" });
+        });
+        ["wsb-Visitor-rhe-container","wsb-Home-rhe-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#face23,#e79126)" });
+        });
+        let i;
+        for (i = 1; i <= maxInningsScoreboard; i++) {
+            ipcRenderer.send('change-color',
+                { elementID: "sb-Visitor-score" + i, value: "#3C5694" });
+            ipcRenderer.send('change-color',
+                { elementID: "sb-Home-score" + i, value: "#3C5694" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "sb-Visitor-score" + i, value: "white" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "sb-Home-score" + i, value: "white" });
+        }
+        ["wsb-Visitor-scoreRR","wsb-Visitor-scoreH", "wsb-Visitor-scoreE", "wsb-Home-scoreRR","wsb-Home-scoreH", "wsb-Home-scoreE"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#F3D922" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "black" });
+        });
+
     } else if  (value === "wbsc_silver") {
         ipcRenderer.send('change-score-board-window-size',
             { width: 405, height: 185 });
@@ -1465,10 +1546,62 @@ function templateChange() {
             { elementID: "csb-main-container", value: "none" });
         ipcRenderer.send('change-display',
             { elementID: "inning-main-container", value: "none" });
+
+
         ipcRenderer.send('change-foreground-color',
             { elementID: "wsb-tournament-container-span", value: "white" });
         ipcRenderer.send('change-foreground-color',
-            { elementID: "wsb-tournament-container", value: "white" });
+            { elementID: "wsb-Visitor-scoreR", value: "white" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-Home-scoreR", value: "white" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Visitor-scoreR", value: "linear-gradient(#d32f6e, #8c0c3d)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Home-scoreR", value: "linear-gradient(#d32f6e, #8c0c3d)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Stats-name", value: "#c8c7cc" });
+
+        ["wsb-outs","wsb-count", "wsb-progress-text", "wsb-progress-icon"].forEach((v, index) => {
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "black" });
+        });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-progress-text", value: "#314b6f" });
+
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-innings-container", value: "#c8c7cc" });
+
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-innings-container", value: "#314b6f" });
+        ["wsb-Visitor-name","wsb-Home-name"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#9795A9" });
+        });
+        ["wsb-Visitor-score-container","wsb-Home-score-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#CBCED8, #5A677D)" });
+        });
+        ["wsb-Visitor-rhe-container","wsb-Home-rhe-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#d32f6e, #8c0c3d)" });
+        });
+        let i;
+        for (i = 1; i <= maxInningsScoreboard; i++) {
+            ipcRenderer.send('change-color',
+                { elementID: "sb-Visitor-score" + i, value: "#B1B5BE" });
+            ipcRenderer.send('change-color',
+                { elementID: "sb-Home-score" + i, value: "#B1B5BE" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "sb-Visitor-score" + i, value: "#314b6f" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "sb-Home-score" + i, value: "#314b6f" });
+        }
+        ["wsb-Visitor-scoreRR","wsb-Visitor-scoreH", "wsb-Visitor-scoreE", "wsb-Home-scoreRR","wsb-Home-scoreH", "wsb-Home-scoreE"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#AF1C58" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "white" });
+        });
     }
     updateTotalRuns("Visitor");
     updateTotalRuns("Home");
@@ -1517,6 +1650,7 @@ btnSecondBase.onclick = function() { toggleBase("Second"); };
 btnThirdBase.onclick = function() { toggleBase("Third"); };
 inputVisitorName.onchange = function() { adjustTeamName("Visitor"); };
 inputHomeName.onchange = function() { adjustTeamName("Home"); };
+inputTournamentName.onchange = function() { adjustTournamentName("Home"); };
 inputVisitorColor.onchange = function() { adjustColor("Visitor", document.getElementById("inputVisitorColor").value, false); };
 inputHomeColor.onchange = function() { adjustColor("Home", document.getElementById("inputHomeColor").value, false); };
 inputStatsColor.onchange = function() { adjustColor("Stats", document.getElementById("inputStatsColor").value, false); };

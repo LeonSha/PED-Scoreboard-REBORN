@@ -233,7 +233,7 @@ span.score { transform: scaleX(2); }
 }
 
 
-#wsb-Visitor-name, #wsb-Home-name {
+#wsb-Visitor-names, #wsb-Home-names {
   color: white;
   text-align: right;
   padding-right: 15px;
