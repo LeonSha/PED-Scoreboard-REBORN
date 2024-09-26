@@ -1562,13 +1562,13 @@ function templateChange() {
         let i;
         for (i = 1; i <= maxInningsScoreboard; i++) {
             ipcRenderer.send('change-color',
-                { elementID: "sb-Visitor-score" + i, value: "#3C5694" });
+                { elementID: "wsb-Visitor-score" + i, value: "#3C5694" });
             ipcRenderer.send('change-color',
-                { elementID: "sb-Home-score" + i, value: "#3C5694" });
+                { elementID: "wsb-Home-score" + i, value: "#3C5694" });
             ipcRenderer.send('change-foreground-color',
-                { elementID: "sb-Visitor-score" + i, value: "white" });
+                { elementID: "wsb-Visitor-score" + i, value: "white" });
             ipcRenderer.send('change-foreground-color',
-                { elementID: "sb-Home-score" + i, value: "white" });
+                { elementID: "wsb-Home-score" + i, value: "white" });
         }
         ["wsb-Visitor-scoreRR","wsb-Visitor-scoreH", "wsb-Visitor-scoreE", "wsb-Home-scoreRR","wsb-Home-scoreH", "wsb-Home-scoreE"].forEach((v, index) => {
             ipcRenderer.send('change-color',
@@ -1632,13 +1632,13 @@ function templateChange() {
         let i;
         for (i = 1; i <= maxInningsScoreboard; i++) {
             ipcRenderer.send('change-color',
-                { elementID: "sb-Visitor-score" + i, value: "#B1B5BE" });
+                { elementID: "wsb-Visitor-score" + i, value: "#B1B5BE" });
             ipcRenderer.send('change-color',
-                { elementID: "sb-Home-score" + i, value: "#B1B5BE" });
+                { elementID: "wsb-Home-score" + i, value: "#B1B5BE" });
             ipcRenderer.send('change-foreground-color',
-                { elementID: "sb-Visitor-score" + i, value: "#314b6f" });
+                { elementID: "wsb-Visitor-score" + i, value: "#314b6f" });
             ipcRenderer.send('change-foreground-color',
-                { elementID: "sb-Home-score" + i, value: "#314b6f" });
+                { elementID: "wsb-Home-score" + i, value: "#314b6f" });
         }
         ["wsb-Visitor-scoreRR","wsb-Visitor-scoreH", "wsb-Visitor-scoreE", "wsb-Home-scoreRR","wsb-Home-scoreH", "wsb-Home-scoreE"].forEach((v, index) => {
             ipcRenderer.send('change-color',
