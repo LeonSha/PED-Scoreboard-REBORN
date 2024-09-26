@@ -8,45 +8,102 @@
     <link rel="stylesheet" href="innings.css">
     <script defer src="innings.js"></script>
   </head>
-  <body>
+  <body style="-webkit-app-region: drag">
     <main>
-        <div class="grid-teams-container">
-          <div class="grid-item" id="sb-heading" style="border: 0 0 0 0; border-left: 4px solid rgb(223, 223, 223);"></div>
-          <div class="grid-item" id="sb-inning1">1</div>
-          <div class="grid-item" id="sb-inning2">2</div>
-          <div class="grid-item" id="sb-inning3">3</div>
-          <div class="grid-item" id="sb-inning4">4</div>
-          <div class="grid-item" id="sb-inning5">5</div>
-          <div class="grid-item" id="sb-inning6">6</div>
-          <div class="grid-item" id="sb-inning7">7</div>
-          <div class="grid-item" id="sb-scoreR">R</div>
-          <div class="grid-item" id="sb-scoreH">H</div>
-          <div class="grid-item" id="sb-scoreE">E</div>
-          <div class="grid-item" id="sb-Visitor-name">VISITORS</div>
-          <div class="grid-item" id="sb-Visitor-score1"></div>
-          <div class="grid-item" id="sb-Visitor-score2"></div>
-          <div class="grid-item" id="sb-Visitor-score3"></div>
-          <div class="grid-item" id="sb-Visitor-score4"></div>
-          <div class="grid-item" id="sb-Visitor-score5"></div>
-          <div class="grid-item" id="sb-Visitor-score6"></div>
-          <div class="grid-item" id="sb-Visitor-score7"></div>
-          <div class="grid-item" id="sb-Visitor-scoreR"></div>
-          <div class="grid-item" id="sb-Visitor-scoreH"></div>
-          <div class="grid-item" id="sb-Visitor-scoreE"></div>
+      <div class="grid-teams-container" id="inning-main-container">
+          <div class="grid-item sb-Stats-color" id="sb-heading" ></div>
+          <div class="grid-item sb-Stats-color" id="sb-inning1">1</div>
+          <div class="grid-item sb-Stats-color" id="sb-inning2">2</div>
+          <div class="grid-item sb-Stats-color" id="sb-inning3">3</div>
+          <div class="grid-item sb-Stats-color" id="sb-inning4">4</div>
+          <div class="grid-item sb-Stats-color" id="sb-inning5">5</div>
+          <div class="grid-item sb-Stats-color" id="sb-inning6">6</div>
+          <div class="grid-item sb-Stats-color" id="sb-inning7">7</div>
+          <div class="grid-item sb-Stats-color" id="sb-scoreR">R</div>
+          <div class="grid-item sb-Stats-color" id="sb-scoreH">H</div>
+          <div class="grid-item sb-Stats-color" id="sb-scoreE">E</div>
+          <div class="grid-item sb-Visitor-name  sb-Visitor-color" id="sb-Visitor-name">VISITORS</div>
+          <div class="grid-item sb-Stats-color" id="sb-Visitor-score1"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Visitor-score2"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Visitor-score3"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Visitor-score4"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Visitor-score5"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Visitor-score6"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Visitor-score7"></div>
+          <div class="grid-item sb-Visitor-color sb-Visitor-scoreR" id="sb-Visitor-scoreR"></div>
+          <div class="grid-item sb-Visitor-color" id="sb-Visitor-scoreH"></div>
+          <div class="grid-item sb-Visitor-color" id="sb-Visitor-scoreE"></div>
           
-          <div class="grid-item" id="sb-Home-name">HOME</div>
-          <div class="grid-item" id="sb-Home-score1"></div>
-          <div class="grid-item" id="sb-Home-score2"></div>
-          <div class="grid-item" id="sb-Home-score3"></div>
-          <div class="grid-item" id="sb-Home-score4"></div>
-          <div class="grid-item" id="sb-Home-score5"></div>
-          <div class="grid-item" id="sb-Home-score6"></div>
-          <div class="grid-item" id="sb-Home-score7"></div>
-          <div class="grid-item" id="sb-Home-scoreR"></div>
-          <div class="grid-item" id="sb-Home-scoreH"></div>
-          <div class="grid-item" id="sb-Home-scoreE"></div>
+          <div class="grid-item sb-Home-name  sb-Home-color" id="sb-Home-name">HOME</div>
+          <div class="grid-item sb-Stats-color" id="sb-Home-score1"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Home-score2"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Home-score3"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Home-score4"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Home-score5"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Home-score6"></div>
+          <div class="grid-item sb-Stats-color" id="sb-Home-score7"></div>
+          <div class="grid-item sb-Home-color sb-Home-scoreR" id="sb-Home-scoreR"></div>
+          <div class="grid-item sb-Home-color" id="sb-Home-scoreH"></div>
+          <div class="grid-item sb-Home-color" id="sb-Home-scoreE"></div>
         </div>
-    </div>
+      <div class="grid-tournament-container" id="wsb-tournament-container">
+        <div class="grid-innings-container-w" id="wsb-innings-container">
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item" id="wsb-inning1">1</div>
+          <div class="grid-item" id="wsb-inning2">2</div>
+          <div class="grid-item" id="wsb-inning3">3</div>
+          <div class="grid-item" id="wsb-inning4">4</div>
+          <div class="grid-item" id="wsb-inning5">5</div>
+          <div class="grid-item" id="wsb-inning6">6</div>
+          <div class="grid-item" id="wsb-inning7">7</div>
+          <div class="grid-item"></div>
+          <div class="grid-item" id="wsb-scoreR">R</div>
+          <div class="grid-item" id="wsb-scoreH">H</div>
+          <div class="grid-item" id="wsb-scoreE">E</div>
+          <div class="grid-item"></div>
+          <div class="grid-teams-container-w">
+            <div class="grid-item sb-Visitor-name" id="wsb-Visitor-name">VISITORS</div>
+            <div class="grid-item"></div>
+            <div class="grid-item" id="wsb-Visitor-score-container">
+              <div class="grid-item" id="wsb-Visitor-score1">0</div>
+              <div class="grid-item" id="wsb-Visitor-score2">0</div>
+              <div class="grid-item" id="wsb-Visitor-score3">0</div>
+              <div class="grid-item" id="wsb-Visitor-score4">0</div>
+              <div class="grid-item" id="wsb-Visitor-score5">0</div>
+              <div class="grid-item" id="wsb-Visitor-score6">0</div>
+              <div class="grid-item" id="wsb-Visitor-score7">0</div>
+            </div>
+            <div class="grid-item"></div>
+            <div class="grid-item" id="wsb-Visitor-rhe-container">
+              <div class="grid-item sb-Visitor-scoreR" id="wsb-Visitor-scoreRR">0</div>
+              <div class="grid-item" id="wsb-Visitor-scoreH">0</div>
+              <div class="grid-item" id="wsb-Visitor-scoreE">0</div>
+            </div>
+            <div class="grid-item"></div>
+
+            <div class="grid-item sb-Home-name" id="wsb-Home-name">HOME</div>
+            <div class="grid-item"></div>
+            <div class="grid-item" id="wsb-Home-score-container">
+              <div class="grid-item" id="wsb-Home-score1">0</div>
+              <div class="grid-item" id="wsb-Home-score2">0</div>
+              <div class="grid-item" id="wsb-Home-score3">0</div>
+              <div class="grid-item" id="wsb-Home-score4">0</div>
+              <div class="grid-item" id="wsb-Home-score5">0</div>
+              <div class="grid-item" id="wsb-Home-score6">0</div>
+              <div class="grid-item" id="wsb-Home-score7">0</div>
+            </div>
+            <div class="grid-item"></div>
+            <div class="grid-item" id="wsb-Home-rhe-container">
+              <div class="grid-item sb-Home-scoreR" id="wsb-Home-scoreRR">0</div>
+              <div class="grid-item" id="wsb-Home-scoreH">0</div>
+              <div class="grid-item" id="wsb-Home-scoreE">0</div>
+            </div>
+            <div class="grid-item"></div>
+          </div>
+        </div>
+        <span id="wsb-tournament-container-span">Testing Tournament</span>
+      </div>
     </main>
   </body>
 </html>

@@ -60,6 +60,7 @@ const btnThirdBase = document.getElementById("btnThirdBase");
 
 const inputVisitorName = document.getElementById("inputVisitorName");
 const inputHomeName = document.getElementById("inputHomeName");
+const inputTournamentName = document.getElementById("inputTournamentName");
 
 // const menuVisitorLogo = document.getElementById("menuVisitorLogo");
 // const menuHomeLogo = document.getElementById("menuHomeLogo");
@@ -118,10 +119,14 @@ let automationTimeout = 3;
 fs.writeFile(obsdir + "/Count.txt", countText, dummyError);
 ipcRenderer.send('update-scoreboard', 
     { elementID: "sb-count", value: countText });
+ipcRenderer.send('update-scoreboard',
+    { elementID: "wsb-count", value: countText });
 // initialize OUTS file for OBS
 fs.writeFile(obsdir + "/Outs.txt", outsText, dummyError);
 ipcRenderer.send('update-scoreboard', 
     { elementID: "sb-outs", value: outsText });
+ipcRenderer.send('update-scoreboard',
+    { elementID: "wsb-outs", value: outsText });
 
 ipcRenderer.send('update-scoreboard',
     { elementID: "sb-count-ball-icon", value: "<img src='ball-0.png' height=50 width=120>" });
@@ -207,6 +212,22 @@ let initializeTeamErrors = function() {
 initializeTeamErrors();
 
 //
+// read the currently saved tournament name
+//
+fs.readFile(obsdir + "/Tournament_Name.txt", function(err, data) {
+    if (err) {
+        fs.writeFileSync(obsdir + "/Tournament_Name.txt", "Tournament");
+        inputTournamentName.value = "Tournament";
+    }
+    else {
+        inputTournamentName.value = data.toString();
+    }
+    // send Visitor Name to new Scoreboard
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-tournament-container-span", value: inputTournamentName.value });
+});
+
+//
 // read the currently saved team names and colors
 //
 fs.readFile(obsdir + "/Visitor_Name.txt", function(err, data) {
@@ -219,7 +240,7 @@ fs.readFile(obsdir + "/Visitor_Name.txt", function(err, data) {
     }
     // send Visitor Name to new Scoreboard
     ipcRenderer.send('update-scoreboard', 
-        { elementID: "sb-Visitor-name", value: inputVisitorName.value });
+        { className: "sb-Visitor-name", value: inputVisitorName.value });
 });
 fs.readFile(obsdir + "/Home_Name.txt", function(err, data) {
     if (err) {
@@ -230,7 +251,7 @@ fs.readFile(obsdir + "/Home_Name.txt", function(err, data) {
         inputHomeName.value = data.toString();
     }
     ipcRenderer.send('update-scoreboard',
-        { elementID: "sb-Home-name", value: inputHomeName.value });
+        { className: "sb-Home-name", value: inputHomeName.value });
 });
 fs.readFile(obsdir + "/Visitor_Color.txt", function(err, data) {
     if (err) {
@@ -264,6 +285,19 @@ fs.readFile(obsdir + "/Stats_Color.txt", function(err, data) {
     }
 
     adjustColor("Stats", inputStatsColor.value, true);
+});
+
+fs.readFile(obsdir + "/Templates.txt", function(err, data) {
+    if (err) {
+        fs.writeFileSync(obsdir + "/Templates.txt", "icon");
+    }
+    else {
+        let objS = document.getElementById("selectTemplates");
+        objS.value = data.toString();
+        templateChange()
+    }
+
+
 });
 
 //
@@ -496,6 +530,7 @@ let changeInningsColor = function(team, inning, idx) {
         score = VisitorScores[inning - 1]
     }
     let teamId = "sb-" + team + "-score" + idx
+    let wteamId = "wsb-" + team + "-score" + idx
     if (score === 0) {
         let backGroundColor = inputStatsColor.value;
         let zeroScore = ""
@@ -512,8 +547,10 @@ let changeInningsColor = function(team, inning, idx) {
         ipcRenderer.send('change-color', {elementID: teamId, value: backGroundColor});
         ipcRenderer.send('update-scoreboard', {elementID: teamId, value: zeroScore})
         ipcRenderer.send('change-foreground-color', {elementID: teamId, value: "white"});
+        ipcRenderer.send('update-scoreboard', {elementID: wteamId, value: zeroScore})
     } else {
         ipcRenderer.send('update-scoreboard', {elementID: teamId, value: score})
+        ipcRenderer.send('update-scoreboard', {elementID: wteamId, value: score})
         let backGroundColor = inputStatsColor.value;
         let foreGroundColor = "white"
         if (value === "icon") {
@@ -560,6 +597,7 @@ let updateTotalRuns = function(team) {
         let j = 1;
         for (j; j <= 7; j++) {
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: currentInning - maxInningsScoreboard + j})
+            ipcRenderer.send('update-scoreboard', {elementID: "wsb-inning" + j, value: currentInning - maxInningsScoreboard + j})
             changeInningsColor(team, currentInning - maxInningsScoreboard + j, j)
         }
     }
@@ -568,13 +606,14 @@ let updateTotalRuns = function(team) {
         let j = 1;
         for (j; j <= 7; j++) {
             ipcRenderer.send('update-scoreboard', {elementID: "sb-inning" + j, value: j})
+            ipcRenderer.send('update-scoreboard', {elementID: "wsb-inning" + j, value: j})
             changeInningsColor(team, j, j)
         }
     }
 
     // For total runs
     ipcRenderer.send('update-scoreboard', 
-        { elementID: "sb-" + team + "-scoreR", value: totalruns.toString() });
+        { className: "sb-" + team + "-scoreR", value: totalruns.toString() });
 };
 
 // const { desktopCapturer, remote } = require('electron');
@@ -594,6 +633,8 @@ let updateHits = function(team, amount) {
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Visitor-scoreH", value: VisitorHit.toString() });
+        ipcRenderer.send('update-scoreboard',
+            { elementID: "wsb-Visitor-scoreH", value: VisitorHit.toString() });
     }
     else if (team === "Home") {
         // console.log("HERE");
@@ -604,6 +645,8 @@ let updateHits = function(team, amount) {
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Home-scoreH", value: HomeHit.toString() });
+        ipcRenderer.send('update-scoreboard',
+            { elementID: "wsb-Home-scoreH", value: HomeHit.toString() });
     }
 };
 
@@ -622,6 +665,8 @@ let updateErrors = function(team, amount) {
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Visitor-scoreE", value: VisitorError.toString() });
+        ipcRenderer.send('update-scoreboard',
+            { elementID: "wsb-Visitor-scoreE", value: VisitorError.toString() });
     }
 
     else if (team === "Home") {
@@ -633,6 +678,8 @@ let updateErrors = function(team, amount) {
 
         ipcRenderer.send('update-scoreboard', 
             { elementID: "sb-Home-scoreE", value: HomeError.toString() });
+        ipcRenderer.send('update-scoreboard',
+            { elementID: "wsb-Home-scoreE", value: HomeError.toString() });
     }
 };
 
@@ -862,11 +909,55 @@ let adjustOuts = function(amount) {
 
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-outs", value: strOuts });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-outs", value: strOuts });
     let outValue = "<img src='out-" + outs + ".png' height=50 width=94>"
     ipcRenderer.send('update-scoreboard',
         { elementID: "sb-count-out-icon", value: outValue });
     progressHeader(now, strOuts);
 };
+
+function ordinal_suffix_of(i) {
+    let j = i % 10,
+        k = i % 100;
+    if (j === 1 && k !== 11) {
+        return i + "st";
+    }
+    if (j === 2 && k !== 12) {
+        return i + "nd";
+    }
+    if (j === 3 && k !== 13) {
+        return i + "rd";
+    }
+    return i + "th";
+}
+
+// Function for updating scoreboard top icon and text - FOR SCOREBOARDS WSB ONLY
+let progressProgressW = function(right_now) {
+    let objS = document.getElementById("selectTemplates");
+    let value = objS.options[objS.selectedIndex].value;
+
+    let inningPrefix = "top";
+    let inningSuffix = "_green";
+    if (isMidInning(right_now)) {
+        inningPrefix = "top"
+    } else if (isEndInning(right_now)) {
+        inningPrefix = "bottom"
+    } else if (isBotInning(right_now)) {
+        inningPrefix = "bottom"
+    }
+    if (value === "wbsc_silver") {
+        inningSuffix = "_pink"
+    }
+
+    let nowInning = Math.floor(now/4) + 1;
+    let inningIconValue = "<img src='" + inningPrefix + inningSuffix + ".png' height=20 width=30>"
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-progress-text", value: ordinal_suffix_of(nowInning) });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-progress-icon", value: inningIconValue });
+
+}
 
 // Function for updating scoreboard top icon and text - FOR SCOREBOARDS ONLY
 let progressProgress = function(right_now) {
@@ -886,6 +977,7 @@ let progressProgress = function(right_now) {
         { elementID: "sb-progress-icon", value: inningIconValue });
 }
 
+
 // Function for updating scoreboard header - FOR INNINGS, SCORESHORT BOARDS ONLY
 let progressHeader = function(right_now, outs) {
     if (!isMidInning(right_now) && !isEndInning(right_now)) {
@@ -897,6 +989,7 @@ let progressHeader = function(right_now, outs) {
             { elementID: "sb-heading", value: nowText[right_now] });
     }
     progressProgress(right_now)
+    progressProgressW(right_now)
 }
 
 //
@@ -910,6 +1003,8 @@ let resetOuts = function() {
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-outs", value: outsText });
     ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-outs", value: outsText });
+    ipcRenderer.send('update-scoreboard',
         { elementID: "sb-count-out-icon", value: "<img src='out-0.png' height=50 width=94>" });
 };
 let setZeroOuts = function() {
@@ -919,6 +1014,8 @@ let setZeroOuts = function() {
     fs.writeFile(obsdir + "/Outs.txt", outsText, dummyError);
     ipcRenderer.send('update-scoreboard', 
        { elementID: "sb-outs", value: outsText });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-outs", value: outsText });
     ipcRenderer.send('update-scoreboard',
         { elementID: "sb-count-out-icon", value: "<img src='out-0.png' height=50 width=94>" });
 }
@@ -981,6 +1078,8 @@ let adjustCount = function(ballDelta, strikeDelta) {
     fs.writeFile(obsdir + "/Count.txt", countText, dummyError);
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-count", value: countText });
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-count", value: countText });
     let ballIconValue = "<img src='ball-" + balls + ".png' height=50 width=120>"
     let strikeIconValue = "<img src='strike-" + strikes + ".png' height=50 width=94>"
     ipcRenderer.send('update-scoreboard',
@@ -1090,7 +1189,17 @@ let adjustTeamName = function(team) {
     let newTeamName = document.getElementById(item).value;
     fs.writeFile(filename, newTeamName, dummyError);
     ipcRenderer.send('update-scoreboard', 
-        { elementID: "sb-" + team + "-name", value: newTeamName });
+        { className: "sb-" + team + "-name", value: newTeamName });
+};
+//
+// adjust tournament name
+//
+let adjustTournamentName = function() {
+    let filename = obsdir + "/" + "Tournament_Name.txt";
+    let newTournamentName = document.getElementById("inputTournamentName").value;
+    fs.writeFile(filename, newTournamentName, dummyError);
+    ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-tournament-container-span", value: newTournamentName });
 };
 
 //
@@ -1132,35 +1241,35 @@ let setBase = function(base) {
     // generate proper base png
     if (firstBase && !secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-0-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-0-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-2-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-2-0-bases.png' height=86 width=116>" });
     }
     if (!firstBase && !secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-0-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-0-0-bases.png' height=86 width=116>" });
     }
     if (firstBase && secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-2-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-2-1-bases.png' height=86 width=116>" });
     }
     if (firstBase && !secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-0-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-0-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-2-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-2-0-bases.png' height=86 width=116>" });
     }
     if (firstBase && secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-2-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-2-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && !secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
     }
 }
 
@@ -1189,35 +1298,35 @@ let clearBase = function(base) {
     // generate proper base png
     if (firstBase && !secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-0-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-0-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-2-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-2-0-bases.png' height=86 width=116>" });
     }
     if (!firstBase && !secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-0-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-0-0-bases.png' height=86 width=116>" });
     }
     if (firstBase && secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-2-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-2-1-bases.png' height=86 width=116>" });
     }
     if (firstBase && !secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-0-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-0-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-2-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-2-0-bases.png' height=86 width=116>" });
     }
     if (firstBase && secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-2-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-2-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && !secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
     }
 }
 
@@ -1229,7 +1338,7 @@ let clearAllBases = function() {
     clearBase("Second");
     clearBase("Third");
     ipcRenderer.send('update-scoreboard', 
-        { elementID: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
+        { className: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
 }
 
 // 
@@ -1274,35 +1383,35 @@ let toggleBase = function(base) {
     // generate proper base png
     if (firstBase && !secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-0-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-0-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-2-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-2-0-bases.png' height=86 width=116>" });
     }
     if (!firstBase && !secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-0-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-0-0-bases.png' height=86 width=116>" });
     }
     if (firstBase && secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-2-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-2-1-bases.png' height=86 width=116>" });
     }
     if (firstBase && !secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-0-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-0-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-2-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-2-0-bases.png' height=86 width=116>" });
     }
     if (firstBase && secondBase && thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='3-2-1-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='3-2-1-bases.png' height=86 width=116>" });
     }
     if (!firstBase && !secondBase && !thirdBase) {
         ipcRenderer.send('update-scoreboard', 
-            { elementID: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
+            { className: "sb-bases", value: "<img src='0-0-0-bases.png' height=86 width=116>" });
     }
 }
 
@@ -1337,39 +1446,13 @@ let adjustColor = function(team, color, read) {
     })
     if (team === "Home" || team === "Visitor") {
         ipcRenderer.send('change-color', 
-        { elementID: "sb-" + team + "-name", value: color });
-        ipcRenderer.send('change-color', 
-            { elementID: "sb-" + team + "-scoreR", value: color });
-        ipcRenderer.send('change-color', 
-            { elementID: "sb-" + team + "-scoreH", value: color });
-        ipcRenderer.send('change-color', 
-            { elementID: "sb-" + team + "-scoreE", value: color });
+        { className: "sb-" + team + "-color", value: color });
     }
     
 
     else {
         ipcRenderer.send('change-color', 
-            { elementID: "sb-Stats-name", value: color });
-        ipcRenderer.send('change-color',
-            { elementID: "sb-Stats-name-classic", value: color });
-        ipcRenderer.send('change-color',
-            { elementID: "sb-heading", value: color });
-            ipcRenderer.send('change-color', 
-            { elementID: "sb-scoreR", value: color });
-        ipcRenderer.send('change-color', 
-            { elementID: "sb-scoreH", value: color });
-        ipcRenderer.send('change-color', 
-            { elementID: "sb-scoreE", value: color });
-
-    var i;
-        for (i = 1; i <= maxInningsScoreboard; i++) {
-            ipcRenderer.send('change-color', 
-                { elementID: "sb-inning" + i, value: color });
-            ipcRenderer.send('change-color', 
-                { elementID: "sb-Visitor-score" + i, value: color });
-            ipcRenderer.send('change-color', 
-                { elementID: "sb-Home-score" + i, value: color });
-        }
+            { className: "sb-Stats-color", value: color });
     }
 
     if (color != oldColor) {
@@ -1381,6 +1464,7 @@ let adjustColor = function(team, color, read) {
 //
 //
 let setFinal = function(progress, inningsToFinal) {
+    // TODO add X and unset
     let finalInn = Math.floor(progress/4) + 1;
     let finalStr = "F/" + finalInn
     // if (finalInn === inningsToFinal) {
@@ -1398,48 +1482,175 @@ let setFinal = function(progress, inningsToFinal) {
 function templateChange() {
     let objS = document.getElementById("selectTemplates");
     let value = objS.options[objS.selectedIndex].value;
+    fs.writeFileSync(obsdir + "/Templates.txt", value);
     if (value === "classic") {
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1090, height: 260 });
         ipcRenderer.send('change-score-board-window-size',
-            { width: 600, height: 190 });
-        ipcRenderer.send('change-grid-template-columns',
-            { elementID: "sb-main-container", value: "auto 260px" });
-        ipcRenderer.send('change-grid-template-rows',
-            { elementID: "sb-teams-container", value: "75px 75px" });
-        ipcRenderer.send('change-font-size',
-            { elementID: "sb-teams-container", value: "45pt" });
+            { width: 650, height: 155 });
         ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name", value: "none" });
+            { elementID: "wsb-tournament-container", value: "none" });
         ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name-classic", value: "inherit" });
+            { elementID: "csb-main-container", value: "inline-grid" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "inline-grid" });
     } else if  (value === "icon") {
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1090, height: 260 });
+        ipcRenderer.send('change-display',
+            { elementID: "wsb-tournament-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "csb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-main-container", value: "inline-grid" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "inline-grid" });
         ipcRenderer.send('change-score-board-window-size',
-            { width: 550, height: 138 });
-        ipcRenderer.send('change-grid-template-columns',
-            { elementID: "sb-main-container", value: "auto 290px" });
-        ipcRenderer.send('change-grid-template-rows',
-            { elementID: "sb-teams-container", value: "52px 46px" });
-        ipcRenderer.send('change-font-size',
-            { elementID: "sb-teams-container", value: "28pt" });
+            { width: 600, height: 102 });
+    } else if  (value === "wbsc_blue") {
+        ipcRenderer.send('change-score-board-window-size',
+            { width: 405, height: 185 });
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1020, height: 175 });
         ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name", value: "inherit" });
+            { elementID: "wsb-tournament-container", value: "inline-grid" });
         ipcRenderer.send('change-display',
-            { elementID: "sb-Stats-name-classic", value: "none" });
+            { elementID: "sb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "csb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "none" });
+
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-tournament-container-span", value: "#e5ad1a" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-Visitor-scoreR", value: "black" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-Home-scoreR", value: "black" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Visitor-scoreR", value: "linear-gradient(#ffe52e, #e5ad1a)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Home-scoreR", value: "linear-gradient(#ffe52e, #e5ad1a)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Stats-name", value: "linear-gradient(#3f57ad, #1b2b69)" });
+        ["wsb-outs","wsb-count", "wsb-progress-text", "wsb-progress-icon"].forEach((v, index) => {
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "white" });
+        });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-progress-text", value: "white" });
+
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-innings-container", value: "linear-gradient(#face23,#e79126 ,transparent 50%)" });
+
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-innings-container", value: "black" });
+        ["wsb-Visitor-name","wsb-Home-name"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#3C5694" });
+        });
+        ["wsb-Visitor-score-container","wsb-Home-score-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#5067A7, #283865)" });
+        });
+        ["wsb-Visitor-rhe-container","wsb-Home-rhe-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#face23,#e79126)" });
+        });
+        let i;
+        for (i = 1; i <= maxInningsScoreboard; i++) {
+            ipcRenderer.send('change-color',
+                { elementID: "wsb-Visitor-score" + i, value: "#3C5694" });
+            ipcRenderer.send('change-color',
+                { elementID: "wsb-Home-score" + i, value: "#3C5694" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "wsb-Visitor-score" + i, value: "white" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "wsb-Home-score" + i, value: "white" });
+        }
+        ["wsb-Visitor-scoreRR","wsb-Visitor-scoreH", "wsb-Visitor-scoreE", "wsb-Home-scoreRR","wsb-Home-scoreH", "wsb-Home-scoreE"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#F3D922" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "black" });
+        });
+
+    } else if  (value === "wbsc_silver") {
+        ipcRenderer.send('change-score-board-window-size',
+            { width: 405, height: 185 });
+        ipcRenderer.send('change-innings-window-size',
+            { width: 1020, height: 175 });
+        ipcRenderer.send('change-display',
+            { elementID: "wsb-tournament-container", value: "inline-grid" });
+        ipcRenderer.send('change-display',
+            { elementID: "sb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "csb-main-container", value: "none" });
+        ipcRenderer.send('change-display',
+            { elementID: "inning-main-container", value: "none" });
+
+
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-tournament-container-span", value: "white" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-Visitor-scoreR", value: "white" });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-Home-scoreR", value: "white" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Visitor-scoreR", value: "linear-gradient(#d32f6e, #8c0c3d)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Home-scoreR", value: "linear-gradient(#d32f6e, #8c0c3d)" });
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-Stats-name", value: "#c8c7cc" });
+
+        ["wsb-outs","wsb-count", "wsb-progress-text", "wsb-progress-icon"].forEach((v, index) => {
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "black" });
+        });
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-progress-text", value: "#314b6f" });
+
+        ipcRenderer.send('change-color',
+            { elementID: "wsb-innings-container", value: "#c8c7cc" });
+
+        ipcRenderer.send('change-foreground-color',
+            { elementID: "wsb-innings-container", value: "#314b6f" });
+        ["wsb-Visitor-name","wsb-Home-name"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#9795A9" });
+        });
+        ["wsb-Visitor-score-container","wsb-Home-score-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#CBCED8, #5A677D)" });
+        });
+        ["wsb-Visitor-rhe-container","wsb-Home-rhe-container"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "linear-gradient(#d32f6e, #8c0c3d)" });
+        });
+        let i;
+        for (i = 1; i <= maxInningsScoreboard; i++) {
+            ipcRenderer.send('change-color',
+                { elementID: "wsb-Visitor-score" + i, value: "#B1B5BE" });
+            ipcRenderer.send('change-color',
+                { elementID: "wsb-Home-score" + i, value: "#B1B5BE" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "wsb-Visitor-score" + i, value: "#314b6f" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: "wsb-Home-score" + i, value: "#314b6f" });
+        }
+        ["wsb-Visitor-scoreRR","wsb-Visitor-scoreH", "wsb-Visitor-scoreE", "wsb-Home-scoreRR","wsb-Home-scoreH", "wsb-Home-scoreE"].forEach((v, index) => {
+            ipcRenderer.send('change-color',
+                { elementID: v, value: "#AF1C58" });
+            ipcRenderer.send('change-foreground-color',
+                { elementID: v, value: "white" });
+        });
     }
     updateTotalRuns("Visitor");
     updateTotalRuns("Home");
+    progressProgressW(now)
 }
-// const actionsList = [];
-// const lastAction = document.querySelector('input')
-// if (document.onclick) {
-//     lastAction = onclick;
-// }
-// else if (document.event.key) {
-//     lastAction = key;
-// }
-
-// function undoLast(lastAction) {
-
-// }
 
 //
 // onclicks for all buttons
@@ -1472,6 +1683,7 @@ btnSecondBase.onclick = function() { toggleBase("Second"); };
 btnThirdBase.onclick = function() { toggleBase("Third"); };
 inputVisitorName.onchange = function() { adjustTeamName("Visitor"); };
 inputHomeName.onchange = function() { adjustTeamName("Home"); };
+inputTournamentName.onchange = function() { adjustTournamentName("Home"); };
 inputVisitorColor.onchange = function() { adjustColor("Visitor", document.getElementById("inputVisitorColor").value, false); };
 inputHomeColor.onchange = function() { adjustColor("Home", document.getElementById("inputHomeColor").value, false); };
 inputStatsColor.onchange = function() { adjustColor("Stats", document.getElementById("inputStatsColor").value, false); };
