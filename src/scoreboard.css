@@ -53,6 +53,7 @@ main {
   text-shadow: 1px 1px #141418;
   text-align: right;
   padding-right: 15px;
+  padding-left: 10px;
 }
 
 #sb-Visitor-name, #sb-Visitor-scoreR, #csb-Visitor-name, #csb-Visitor-scoreR {
@@ -237,6 +238,7 @@ span.score { transform: scaleX(2); }
   color: white;
   text-align: right;
   padding-right: 15px;
+  padding-left: 10px;
   background: linear-gradient(#3f57ad, #1b2b69);
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
