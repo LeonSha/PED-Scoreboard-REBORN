@@ -1511,9 +1511,9 @@ function templateChange() {
             { width: 600, height: 102 });
     } else if  (value === "wbsc_blue") {
         ipcRenderer.send('change-score-board-window-size',
-            { width: 405, height: 185 });
+            { width: 410, height: 185 });
         ipcRenderer.send('change-innings-window-size',
-            { width: 1020, height: 175 });
+            { width: 1025, height: 175 });
         ipcRenderer.send('change-display',
             { elementID: "wsb-tournament-container", value: "inline-grid" });
         ipcRenderer.send('change-display',
@@ -1613,7 +1613,7 @@ function templateChange() {
             { elementID: "wsb-progress-text", value: "#314b6f" });
 
         ipcRenderer.send('change-color',
-            { elementID: "wsb-innings-container", value: "#c8c7cc" });
+            { elementID: "wsb-innings-container", value: "linear-gradient(#c8c7cc, #c8c7cc, transparent 50%)" });
 
         ipcRenderer.send('change-foreground-color',
             { elementID: "wsb-innings-container", value: "#314b6f" });

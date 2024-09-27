@@ -81,7 +81,7 @@ main {
 
 .grid-tournament-container {
   border-radius: 10px;
-  background: linear-gradient(0deg, darkblue, transparent 50%, darkblue);
+  background: linear-gradient(darkblue, transparent 60%, darkblue);
   padding-top: 15px;
   text-align: center;
 }
@@ -102,7 +102,8 @@ main {
   align-items: stretch;
   grid-template-rows: 40px 100px;
   border-radius: 10px;
-  background-color:  #c8c7cc;
+  /*background-color:  #c8c7cc;*/
+  background:  linear-gradient(#c8c7cc, #c8c7cc, transparent 50%);
   /*background: linear-gradient(#face23,#e79126 ,transparent 50%);*/
   /*color: black;*/
   color: #314b6f;
@@ -121,8 +122,8 @@ main {
   align-items: stretch;
   grid-template-rows: 50px 50px;
   border-radius: 10px;
-  background-color: darkblue;
-}
+  background: linear-gradient(darkblue, transparent, darkblue);
+  }
 
 #wsb-inning1, #wsb-inning2, #wsb-inning3, #wsb-inning4, #wsb-inning5, #wsb-inning6, #wsb-inning7, #wsb-scoreR, #wsb-scoreH, #wsb-scoreE {
   text-align: center;
