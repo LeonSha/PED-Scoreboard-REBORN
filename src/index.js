@@ -1033,6 +1033,8 @@ let resetCount = function() {
     ipcRenderer.send('update-scoreboard', 
         { elementID: "sb-count", value: countText });
     ipcRenderer.send('update-scoreboard',
+        { elementID: "wsb-count", value: countText });
+    ipcRenderer.send('update-scoreboard',
         { elementID: "sb-count-ball-icon", value: "<img src='ball-0.png' height=50 width=120>" });
     ipcRenderer.send('update-scoreboard',
         { elementID: "sb-count-strike-icon", value: "<img src='strike-0.png' height=50 width=94>" });
