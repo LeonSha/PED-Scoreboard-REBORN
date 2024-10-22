@@ -1,7 +1,7 @@
 {
   "name": "ped-scoreboard",
   "productName": "PED Scoreboard REBORN",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "authors": "Ben Fiore",
   "description": "Scoreboard helper for OBSProject",
   "main": "src/main.js",
